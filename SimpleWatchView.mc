@@ -6,7 +6,6 @@ using Toybox.Math as Math;
 using Toybox.ActivityMonitor as Act;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Calendar;
-ttt
 
 
 class SimpleWatchView extends Ui.WatchFace {
