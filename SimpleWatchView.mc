@@ -156,20 +156,41 @@ class SimpleWatchView extends Ui.WatchFace {
 		             battery_color = Gfx.COLOR_WHITE ;
 		             }
 	
-        // position date
-		dc.setColor(battery_color, Gfx.COLOR_TRANSPARENT);
-        dc.drawText(center_x + radius * 0.90, center_y , Gfx.FONT_TINY, dayDate, Gfx.TEXT_JUSTIFY_CENTER);
-       
-       // arc blue 
-       dc.setPenWidth(8);
+	  // arc blue 
+       dc.setPenWidth(7);
 	   dc.setColor(Gfx.COLOR_BLUE, Gfx.COLOR_TRANSPARENT);  
 	   dc.drawArc(arc_width , arc_height , arc_radius * 0.70, Gfx.ARC_CLOCKWISE, 90, 90-360*xyz_hour) ;
 	 
 	
-       dc.setPenWidth(8);
+       dc.setPenWidth(7);
 	   dc.setColor(Gfx.COLOR_BLUE, Gfx.COLOR_TRANSPARENT);  
 	   dc.drawArc(arc_width , arc_height , arc_radius , Gfx.ARC_CLOCKWISE, 90, 90-360*xyz_min/60) ;
-
+	
+	  	
+		
+		//TEST PHONE CONNECTED
+	    if (System.getDeviceSettings().phoneConnected == true) {
+		  
+		   if (System.getDeviceSettings().notificationCount != 0) {
+		    //TEST NOTIFICATIONS
+		    var DrawIconNotification = Ui.loadResource(Rez.Drawables.Notification) ;
+            dc.drawBitmap(center_x + radius * 0.77, center_y, DrawIconNotification) ;
+		   
+		     } else { 
+		     // DATE SHOWED
+		      dc.setColor(battery_color, Gfx.COLOR_TRANSPARENT);
+              dc.drawText(center_x + radius * 0.90, center_y , Gfx.FONT_SMALL, dayDate, Gfx.TEXT_JUSTIFY_CENTER);
+             }
+		  
+		   } else {
+	       var DrawIconConnected = Ui.loadResource(Rez.Drawables.Notconnected) ;
+           dc.drawBitmap(center_x + radius * 0.77, center_y, DrawIconConnected);
+		   }
+		//TEST PHONE CONNECTED
+		
+     
+      
+     
        
        //draw the hour hand
        dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
@@ -182,21 +203,20 @@ class SimpleWatchView extends Ui.WatchFace {
        dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);    
        dc.fillCircle((center_x + hour_length * Math.cos(hour_angle)), 
                      (center_y + hour_length * Math.sin(hour_angle)), 
-                     radius * 0.045);
+                     radius * 0.035);
       
      
-       
-        // draw the minute hand
-        dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
+         // draw the minute hand
+        dc.setColor(Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT);
         dc.setPenWidth(6);
         dc.drawLine(center_x, center_y,
             (center_x + minute_length * Math.cos(minute_angle)),
             (center_y + minute_length * Math.sin(minute_angle)));
            
-       dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);    
+       dc.setColor(Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT);    
        dc.fillCircle((center_x + minute_length * Math.cos(minute_angle)), 
                      (center_y + minute_length * Math.sin(minute_angle)), 
-                     radius * 0.045);
+                     radius * 0.035);
       
      
       
@@ -205,17 +225,18 @@ class SimpleWatchView extends Ui.WatchFace {
        dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_TRANSPARENT);    
        dc.fillCircle(center_x, center_y, radius * 0.10);
    
-   
-       dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);    
-       dc.fillCircle((center_x + radius * 0.10 * Math.cos(minute_angle)), 
-                     (center_y + radius * 0.10 * Math.sin(minute_angle)), 
-                     radius * 0.045);
-                     
        dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);    
        dc.fillCircle((center_x + radius * 0.10 * Math.cos(hour_angle)), 
                      (center_y + radius * 0.10 * Math.sin(hour_angle)), 
-                     radius * 0.045);
+                     radius * 0.035);
              
+   
+       dc.setColor(Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT);    
+       dc.fillCircle((center_x + radius * 0.10 * Math.cos(minute_angle)), 
+                     (center_y + radius * 0.10 * Math.sin(minute_angle)), 
+                     radius * 0.035);
+                     
+      
       
     
        // TEST TEST TEST 
