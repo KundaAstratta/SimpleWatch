@@ -168,25 +168,25 @@ class SimpleWatchView extends Ui.WatchFace {
 	
 	  	
 		
-		//TEST PHONE CONNECTED
-	    if (System.getDeviceSettings().phoneConnected == true) {
+         //TEST PHONE CONNECTED
+	 if (System.getDeviceSettings().phoneConnected == true) {
 		  
 		   if (System.getDeviceSettings().notificationCount != 0) {
 		    //TEST NOTIFICATIONS
 		    var DrawIconNotification = Ui.loadResource(Rez.Drawables.Notification) ;
-            dc.drawBitmap(center_x + radius * 0.77, center_y, DrawIconNotification) ;
+                    dc.drawBitmap(center_x + radius * 0.77, center_y, DrawIconNotification) ;
 		   
 		     } else { 
 		     // DATE SHOWED
 		      dc.setColor(battery_color, Gfx.COLOR_TRANSPARENT);
-              dc.drawText(center_x + radius * 0.90, center_y , Gfx.FONT_SMALL, dayDate, Gfx.TEXT_JUSTIFY_CENTER);
-             }
+                      dc.drawText(center_x + radius * 0.90, center_y , Gfx.FONT_SMALL, dayDate, Gfx.TEXT_JUSTIFY_CENTER);
+                     }
 		  
-		   } else {
-	       var DrawIconConnected = Ui.loadResource(Rez.Drawables.Notconnected) ;
-           dc.drawBitmap(center_x + radius * 0.77, center_y, DrawIconConnected);
-		   }
-		//TEST PHONE CONNECTED
+           } else {
+	      var DrawIconConnected = Ui.loadResource(Rez.Drawables.Notconnected) ;
+              dc.drawBitmap(center_x + radius * 0.77, center_y, DrawIconConnected);
+	  }
+          //TEST PHONE CONNECTED
 		
      
       
