@@ -49,18 +49,51 @@ class SimpleWatchView extends Ui.WatchFace {
         var diameter = dc.getWidth() ;
         var radius = diameter / 2 ;
       
+        // percent
+        // avant      
+        var percent_big_circ = 0.80;
+        var percent_lit_circ = 0.70;
+        var percent_pos_dat = 0.90;
+        var percent_pos_oth = 0.77;
+      
+      
+      
+       if (System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_ROUND) {
+	         if (System.getDeviceSettings().screenWidth < 220) {  //SmallRound
+	 
+	        percent_big_circ = 0.90;
+                percent_lit_circ = 0.70;
+                percent_pos_dat = 0.20;
+                percent_pos_oth = 0.20;   	
+	 	
+     	       } else {	                   //largeRound
+	
+	         percent_big_circ = 0.95;
+                 percent_lit_circ = 0.75;
+                 percent_pos_dat = 0.20;
+                 percent_pos_oth = 0.20;
+	       	
+	          } 
+	  } else {					//semiRound
+	    	   
+	 percent_big_circ = 0.80;
+         percent_lit_circ = 0.70;
+         percent_pos_dat = 0.90;
+         percent_pos_oth = 0.77;
+      }
+      
       
         // the second hand (length)
-        var seconde_length = 0.80 * radius;
+        var seconde_length = percent_big_circ * radius;
         // the minute hand (length)
-        var minute_length = 0.80 * radius;
+        var minute_length = percent_big_circ * radius;
         // the hour hand (length)
-        var hour_length = 0.70 * minute_length;
+        var hour_length = percent_lit_circ * minute_length;
        
         // for the arc
         var arc_width = center_x ;
         var arc_height = center_y ;
-        var arc_radius = radius * 0.80;
+        var arc_radius = radius * percent_big_circ;
         var pos_min;
     
     
@@ -77,7 +110,7 @@ class SimpleWatchView extends Ui.WatchFace {
         
         dc.setPenWidth(7);
         dc.setColor(Gfx.COLOR_GREEN, Gfx.COLOR_TRANSPARENT) ;    
-        dc.drawCircle(center_x , center_y, arc_radius * 0.70);
+        dc.drawCircle(center_x , center_y, arc_radius * percent_lit_circ);
       
       
 
@@ -157,36 +190,36 @@ class SimpleWatchView extends Ui.WatchFace {
 		             }
 	
 	  // arc blue 
-       dc.setPenWidth(7);
+           dc.setPenWidth(7);
 	   dc.setColor(Gfx.COLOR_BLUE, Gfx.COLOR_TRANSPARENT);  
-	   dc.drawArc(arc_width , arc_height , arc_radius * 0.70, Gfx.ARC_CLOCKWISE, 90, 90-360*xyz_hour) ;
+	   dc.drawArc(arc_width , arc_height , arc_radius * percent_lit_circ, Gfx.ARC_CLOCKWISE, 90, 90-360*xyz_hour) ;
 	 
 	
-       dc.setPenWidth(7);
+           dc.setPenWidth(7);
 	   dc.setColor(Gfx.COLOR_BLUE, Gfx.COLOR_TRANSPARENT);  
 	   dc.drawArc(arc_width , arc_height , arc_radius , Gfx.ARC_CLOCKWISE, 90, 90-360*xyz_min/60) ;
 	
 	  	
 		
-         //TEST PHONE CONNECTED
-	 if (System.getDeviceSettings().phoneConnected == true) {
+		//TEST PHONE CONNECTED
+	    if (System.getDeviceSettings().phoneConnected == true) {
 		  
 		   if (System.getDeviceSettings().notificationCount != 0) {
 		    //TEST NOTIFICATIONS
 		    var DrawIconNotification = Ui.loadResource(Rez.Drawables.Notification) ;
-                    dc.drawBitmap(center_x + radius * 0.77, center_y, DrawIconNotification) ;
-		   
+                    dc.drawBitmap(center_x + radius * percent_pos_oth, center_y, DrawIconNotification) ;
 		     } else { 
 		     // DATE SHOWED
 		      dc.setColor(battery_color, Gfx.COLOR_TRANSPARENT);
-                      dc.drawText(center_x + radius * 0.90, center_y , Gfx.FONT_SMALL, dayDate, Gfx.TEXT_JUSTIFY_CENTER);
-                     }
+                      dc.drawText(center_x + radius * percent_pos_dat, center_y , Gfx.FONT_SMALL, dayDate, Gfx.TEXT_JUSTIFY_CENTER);
+             }
 		  
-           } else {
-	      var DrawIconConnected = Ui.loadResource(Rez.Drawables.Notconnected) ;
-              dc.drawBitmap(center_x + radius * 0.77, center_y, DrawIconConnected);
-	  }
-          //TEST PHONE CONNECTED
+		   } else {
+	       var DrawIconConnected = Ui.loadResource(Rez.Drawables.Notconnected) ;
+               dc.drawBitmap(center_x + radius * percent_pos_oth, center_y, DrawIconConnected);
+           
+		   }
+		//TEST PHONE CONNECTED
 		
      
       
