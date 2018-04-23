@@ -1,0 +1,18 @@
+<settings>
+	<setting propertyKey="@Properties.ArcColor" title="@Strings.ArcColor">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.ColorWhite</listEntry>                        
+            <listEntry value="1">@Strings.ColorGray</listEntry>
+            <listEntry value="2">@Strings.ColorRed</listEntry>
+            <listEntry value="3">@Strings.ColorDarkRed</listEntry>
+            <listEntry value="4">@Strings.ColorOrange</listEntry>
+            <listEntry value="5">@Strings.ColorYellow</listEntry>
+            <listEntry value="6">@Strings.ColorGreen</listEntry>
+            <listEntry value="7">@Strings.ColorDarkGreen</listEntry>
+            <listEntry value="8">@Strings.ColorBlue</listEntry>
+            <listEntry value="9">@Strings.ColorDarkBlue</listEntry>
+            <listEntry value="10">@Strings.ColorPurple</listEntry>
+            <listEntry value="11">@Strings.ColorPink</listEntry>
+        </settingConfig>
+	</setting>
+</settings>
