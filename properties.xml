@@ -1,0 +1,4 @@
+<properties>
+	<property id="ArcColorOut" type="number">0</property>
+	<property id="ArcColorIn" type="number">0</property>	
+</properties>
