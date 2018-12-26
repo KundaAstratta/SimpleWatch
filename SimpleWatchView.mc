@@ -285,7 +285,7 @@ class SimpleWatchView extends Ui.WatchFace {
 		   pos_large = 0 ;
 		 } else {
 		   dc.setPenWidth(9);
-		   pos_large = 8 ;
+		   pos_large = 7 ;
 		 }   
 	   // 
 	   
