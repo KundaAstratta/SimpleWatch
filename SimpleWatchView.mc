@@ -50,29 +50,39 @@ class SimpleWatchView extends Ui.WatchFace {
         var diameter = dc.getWidth() ;
         var radius = diameter / 2 ;
       
-        // percent    
+        // percent for differents devices   
         var percent_big_circ = 0.80;
         var percent_lit_circ = 0.70;
         var percent_pos_dat = 0.90;
         var percent_pos_oth = 0.77;
         var pos_dec = 6;
-      
-      
+        var l_circ_back = 7;
+        var l_circ = 9;
+        var pos_l = 7;
+       
       
        if (System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_ROUND) {
 	         if (System.getDeviceSettings().screenWidth < 220) {  //SmallRound
 	 
 	            percent_big_circ = 0.90;
-                percent_lit_circ = 0.70;
+                percent_lit_circ = 0.60;
                 percent_pos_dat = 0.20;
-                percent_pos_oth = 0.20;   	
+                percent_pos_oth = 0.20;   
+                l_circ_back = 10;
+                l_circ = 12;
+                pos_l = 14;	
+                pos_dec = 6;
 	 	
      	       } else {	                   //largeRound
 	
 	             percent_big_circ = 0.95;
-                 percent_lit_circ = 0.75;
+                 percent_lit_circ = 0.65;
                  percent_pos_dat = 0.20;
                  percent_pos_oth = 0.20;
+                 l_circ_back = 10;
+                 l_circ = 12;
+                 pos_l = 14;
+                 pos_dec = 6;
 	       	
 	          } 
 	  } else {					//semiRound
@@ -81,6 +91,11 @@ class SimpleWatchView extends Ui.WatchFace {
          percent_lit_circ = 0.70;
          percent_pos_dat = 0.25;
          percent_pos_oth = 0.15;
+         l_circ_back = 7;
+         l_circ = 9;
+         pos_l = 7;
+         pos_dec = 6;
+         
       }
       
       
@@ -121,11 +136,11 @@ class SimpleWatchView extends Ui.WatchFace {
         
         
         // Background circles 
-        dc.setPenWidth(7);
+        dc.setPenWidth(l_circ_back);
         dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_TRANSPARENT);    
         dc.drawCircle(center_x , center_y, arc_radius);
         
-        dc.setPenWidth(7);
+        dc.setPenWidth(l_circ_back);
         dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_TRANSPARENT) ;    
         dc.drawCircle(center_x , center_y, arc_radius * percent_lit_circ);
       
@@ -176,7 +191,7 @@ class SimpleWatchView extends Ui.WatchFace {
     
  
         // TEST
-       //var stepsPercent = 0.61;
+        // stepsPercent = 0.61;
         // TEST
         
         if (stepsPercent >= 1.0) {
@@ -219,25 +234,19 @@ class SimpleWatchView extends Ui.WatchFace {
 	  var colorPropertiesIn = App.getApp().getProperty("ArcColorIn") ;
       color_arc_in = returnColor(colorPropertiesIn); 
 	
+	  dc.setColor(color_arc_in, Gfx.COLOR_TRANSPARENT);    
+      dc.fillCircle(center_x, center_y - arc_radius * percent_lit_circ, l_circ * 0.45) ;
 	  
-	  
-	   dc.setColor(color_arc_in, Gfx.COLOR_TRANSPARENT);    
-       dc.fillEllipse(center_x, 
-              center_y - arc_radius * percent_lit_circ + 1, 
-                         radius * 0.1, radius* 0.04);                     
-   
-	  
-       dc.setPenWidth(9);
+       dc.setPenWidth(l_circ);
 	   dc.setColor(color_arc_in, Gfx.COLOR_TRANSPARENT);  
 	   dc.drawArc(arc_width , arc_height , arc_radius * percent_lit_circ, Gfx.ARC_CLOCKWISE, 90, 90-360*xyz_hour) ;
 	 
 	
-	    dc.setColor(color_arc_out, Gfx.COLOR_TRANSPARENT);    
-        dc.fillEllipse(center_x, 
-              center_y - arc_radius + 0.9 , 
-                         radius * 0.1, radius* 0.04);
+	   dc.setColor(color_arc_out, Gfx.COLOR_TRANSPARENT);    
+	   dc.fillCircle(center_x, center_y - arc_radius , l_circ * 0.45) ;
 	
-       dc.setPenWidth(9);
+	
+       dc.setPenWidth(l_circ);
 	   dc.setColor(color_arc_out, Gfx.COLOR_TRANSPARENT);  
 	   dc.drawArc(arc_width , arc_height , arc_radius , Gfx.ARC_CLOCKWISE, 90, 90-360*xyz_min/60) ;
 	
@@ -284,8 +293,8 @@ class SimpleWatchView extends Ui.WatchFace {
 		   dc.setPenWidth(3);
 		   pos_large = 0 ;
 		 } else {
-		   dc.setPenWidth(9);
-		   pos_large = 7 ;
+		   dc.setPenWidth(l_circ);
+		   pos_large = pos_l ;
 		 }   
 	   // 
 	   
@@ -301,6 +310,7 @@ class SimpleWatchView extends Ui.WatchFace {
 		     dc.drawArc(width/2, height/2, arc_radius - pos_dec - pos_large, Gfx.ARC_CLOCKWISE, 0 , -180 * battery); 
 		    }
 		
+	
 		
 		// top arc step
 		 
@@ -323,7 +333,7 @@ class SimpleWatchView extends Ui.WatchFace {
     
         }
       
-     
+       
        
        //draw the hour hand
        
@@ -340,31 +350,40 @@ class SimpleWatchView extends Ui.WatchFace {
        }
        
        dc.setColor(color_hand_in, Gfx.COLOR_TRANSPARENT);
-       dc.setPenWidth(6);
+       dc.setPenWidth(7);
        dc.drawLine(center_x, center_y,
             (center_x + hour_length * Math.cos(hour_angle)),
             (center_y + hour_length * Math.sin(hour_angle)));
-            
-            
+                  
        dc.setColor(color_hand_in, Gfx.COLOR_TRANSPARENT);    
        dc.fillCircle((center_x + hour_length * Math.cos(hour_angle)), 
                      (center_y + hour_length * Math.sin(hour_angle)), 
-                     radius * 0.035);
-      
+                     radius * 0.04);
+                           
+       
+       dc.setColor(color_background, Gfx.COLOR_TRANSPARENT);    
+       dc.fillCircle((center_x + hour_length * Math.cos(hour_angle)), 
+                     (center_y + hour_length * Math.sin(hour_angle)), 
+                     radius * 0.02);
+                           
      
          // draw the minute hand
         dc.setColor(color_hand_out, Gfx.COLOR_TRANSPARENT);
-        dc.setPenWidth(6);
+        dc.setPenWidth(7);
         dc.drawLine(center_x, center_y,
             (center_x + minute_length * Math.cos(minute_angle)),
             (center_y + minute_length * Math.sin(minute_angle)));
-           
+               
        dc.setColor(color_hand_out, Gfx.COLOR_TRANSPARENT);    
        dc.fillCircle((center_x + minute_length * Math.cos(minute_angle)), 
                      (center_y + minute_length * Math.sin(minute_angle)), 
-                     radius * 0.035);
-      
+                     radius * 0.04);
+                  
      
+      dc.setColor(color_background, Gfx.COLOR_TRANSPARENT);    
+      dc.fillCircle((center_x + minute_length * Math.cos(minute_angle)), 
+                     (center_y + minute_length * Math.sin(minute_angle)), 
+                     radius * 0.02);
       
       
        // the watch center
@@ -374,14 +393,13 @@ class SimpleWatchView extends Ui.WatchFace {
        dc.setColor(color_hand_in, Gfx.COLOR_TRANSPARENT);    
        dc.fillCircle((center_x + radius * 0.10 * Math.cos(hour_angle)), 
                      (center_y + radius * 0.10 * Math.sin(hour_angle)), 
-                     radius * 0.035);
-             
+                     radius * 0.04);
+                               
    
        dc.setColor(color_hand_out, Gfx.COLOR_TRANSPARENT);    
        dc.fillCircle((center_x + radius * 0.10 * Math.cos(minute_angle)), 
                      (center_y + radius * 0.10 * Math.sin(minute_angle)), 
-                     radius * 0.035);
-                     
+                     radius * 0.04);
     
     
        // Awake ?
