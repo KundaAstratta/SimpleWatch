@@ -59,8 +59,10 @@ class SimpleWatchView extends Ui.WatchFace {
         var l_circ_back = 7;
         var l_circ = 9;
         var pos_l = 7;
-       
-      
+        
+        // properties of arc' width
+        var large_arc = App.getApp().getProperty("LargeArc") ;
+	
        if (System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_ROUND) {
 	         if (System.getDeviceSettings().screenWidth < 220) {  //SmallRound
 	 
@@ -72,7 +74,16 @@ class SimpleWatchView extends Ui.WatchFace {
                 l_circ = 12;
                 pos_l = 14;	
                 pos_dec = 6;
-	 	
+                
+                     //Extra Large
+                     if (large_arc == 2) {
+                        percent_big_circ = 0.90;
+                        percent_lit_circ = 0.60;
+                        l_circ_back = 15;
+                        l_circ = 15; 
+                        pos_dec = 6;
+                        }
+                     
      	       } else {	                   //largeRound
 	
 	             percent_big_circ = 0.95;
@@ -83,18 +94,47 @@ class SimpleWatchView extends Ui.WatchFace {
                  l_circ = 12;
                  pos_l = 14;
                  pos_dec = 6;
+                       
+                     //Extra Large
+                     if (large_arc == 2) {
+                        percent_big_circ = 0.90;
+                        percent_lit_circ = 0.60;
+                        l_circ_back = 15;
+                        l_circ = 17; 
+                        pos_dec = 8;
+                        }
+                     
 	       	
 	          } 
 	  } else {					//semiRound
-	    	   
+	     //position outer arc 	   
 	     percent_big_circ = 0.80;
+	     //inner arc
          percent_lit_circ = 0.70;
+         // position date
          percent_pos_dat = 0.25;
+         // position notification, alarm
          percent_pos_oth = 0.15;
+         //back circle width
          l_circ_back = 7;
+         //arc width
          l_circ = 9;
+         //position with arc width
          pos_l = 7;
+         // position without arc width
          pos_dec = 6;
+        
+         //Extra Large
+          if (large_arc == 2) {
+              percent_big_circ = 0.75;
+              percent_lit_circ = 0.60;
+              percent_pos_dat = 0.20;
+              percent_pos_oth = 0.05;
+              l_circ_back = 11;
+              l_circ = 14; 
+              pos_dec = 9;
+              }
+       
          
       }
       
@@ -163,7 +203,7 @@ class SimpleWatchView extends Ui.WatchFace {
         hour_angle -= ANGLE_ADJUST;
         seconde_angle -= ANGLE_ADJUST;
       
-        // TEST
+        // TEST time
         // min=10 ; 
         // TEST
         
@@ -177,7 +217,7 @@ class SimpleWatchView extends Ui.WatchFace {
          
          stepsNow = Act.getInfo().steps;
          
-         // TEST 
+         // TEST steps
          // stepsMax = 100;
          // stepsNow = 1;
          //TEST
@@ -190,8 +230,8 @@ class SimpleWatchView extends Ui.WatchFace {
         var color_sec= Gfx.COLOR_BLUE;
     
  
-        // TEST
-        // stepsPercent = 0.61;
+        // TEST stepsPercent
+        //  stepsPercent = 0.71;
         // TEST
         
         if (stepsPercent >= 1.0) {
@@ -212,7 +252,7 @@ class SimpleWatchView extends Ui.WatchFace {
        
         battery_color = color_foreground ; 
         
-        //TEST
+        //TEST battery
         //battery = 0.40;
         //TEST
         if (battery < 0.50) {
@@ -281,14 +321,12 @@ class SimpleWatchView extends Ui.WatchFace {
      	var width = dc.getWidth();
         var height = dc.getHeight();  
         
-       //////// TEST TEST TEST 
+       // TEST Awake is true
        // isAwake = true;
-       /////// TEST TEST
+       // TEST
        
-       // show large arc
-		var large_arc = 0 ;
+       // show large arc 
 		var pos_large = 0 ;
-		large_arc = App.getApp().getProperty("LargeArc") ;
 		if (large_arc == 0) {
 		   dc.setPenWidth(3);
 		   pos_large = 0 ;
