@@ -62,7 +62,8 @@
 	<setting propertyKey="@Properties.LargeArc" title="@Strings.LargeArc">
 	   <settingConfig type="list">
             <listEntry value="0">@Strings.ShowNo</listEntry>                        
-            <listEntry value="1">@Strings.ShowYes</listEntry>
+            <listEntry value="1">@Strings.ShowYes</listEntry>                       
+            <listEntry value="2">@Strings.ShowXL</listEntry>
         </settingConfig>
 	</setting>
 </settings>
