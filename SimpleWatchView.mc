@@ -178,10 +178,12 @@ class SimpleWatchView extends Ui.WatchFace {
         // Background circles 
         dc.setPenWidth(l_circ_back);
         dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_TRANSPARENT);    
+   //     dc.setColor(Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT);    
         dc.drawCircle(center_x , center_y, arc_radius);
         
         dc.setPenWidth(l_circ_back);
         dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_TRANSPARENT) ;    
+   //     dc.setColor(Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT);    
         dc.drawCircle(center_x , center_y, arc_radius * percent_lit_circ);
       
       
@@ -231,7 +233,7 @@ class SimpleWatchView extends Ui.WatchFace {
     
  
         // TEST stepsPercent
-        //  stepsPercent = 0.71;
+        //stepsPercent = 0.005;
         // TEST
         
         if (stepsPercent >= 1.0) {
@@ -318,7 +320,7 @@ class SimpleWatchView extends Ui.WatchFace {
 		   }
 		//PHONE CONNECTED
 		
-     	var width = dc.getWidth();
+	 	var width = dc.getWidth();
         var height = dc.getHeight();  
         
        // TEST Awake is true
@@ -336,20 +338,8 @@ class SimpleWatchView extends Ui.WatchFace {
 		 }   
 	   // 
 	   
-       
         	
-		// bottom arc battery
-		var PropertiesShowBattery = 0;
-		PropertiesShowBattery = App.getApp().getProperty("ShowBatteryArc") ;
-		if ((PropertiesShowBattery == 0) or 
-		   ((PropertiesShowBattery == 2) and (isAwake == true))) 
-		   {
-		     dc.setColor(battery_color, Gfx.COLOR_TRANSPARENT); 
-		     dc.drawArc(width/2, height/2, arc_radius - pos_dec - pos_large, Gfx.ARC_CLOCKWISE, 0 , -180 * battery); 
-		    }
-		
 	
-		
 		// top arc step
 		 
        dc.setColor(color_sec , Gfx.COLOR_TRANSPARENT); 
@@ -362,16 +352,40 @@ class SimpleWatchView extends Ui.WatchFace {
 		 if (stepsPercent >= 1.0) {
 		        dc.drawArc(width/2, height/2, arc_radius - pos_dec - pos_large, Gfx.ARC_COUNTER_CLOCKWISE, 0 , 180); 
            } else {
-             if (stepsPercent <= 0.1) {
+             if (stepsPercent <= 0.01) {
                 dc.drawArc(width/2, height/2, arc_radius - pos_dec - pos_large, Gfx.ARC_COUNTER_CLOCKWISE, 0 , 1); 
                  } else {
                  dc.drawArc(width/2, height/2, arc_radius - pos_dec - pos_large, Gfx.ARC_COUNTER_CLOCKWISE, 0 , stepsPercent * 180); 
+                  if ((large_arc == 1) or (large_arc ==2)) 
+                     {
+                      dc.fillCircle((center_x + (arc_radius - pos_dec - pos_large) * Math.cos(-Math.PI*stepsPercent)) ,
+                                    (center_y + (arc_radius - pos_dec - pos_large) * Math.sin(-Math.PI*stepsPercent)),
+                                    l_circ * 0.45) ;
+	                 }
                 }       
            }
-    
-        }
+          }
       
-       
+      
+        // bottom arc battery
+		var PropertiesShowBattery = 0;
+		PropertiesShowBattery = App.getApp().getProperty("ShowBatteryArc") ;
+		if ((PropertiesShowBattery == 0) or 
+		   ((PropertiesShowBattery == 2) and (isAwake == true))) 
+		   {
+		     dc.setColor(battery_color, Gfx.COLOR_TRANSPARENT); 
+		     dc.drawArc(width/2, height/2, arc_radius - pos_dec - pos_large, Gfx.ARC_CLOCKWISE, 0 , -180 * battery); 
+		     if ((large_arc == 1) or (large_arc ==2)) 
+		        {
+                 dc.fillCircle((center_x + (arc_radius - pos_dec - pos_large) * Math.cos(Math.PI*battery)) ,
+                               (center_y + (arc_radius - pos_dec - pos_large) * Math.sin(Math.PI*battery)),
+                                l_circ * 0.45) ;
+	            }
+		    }
+	 
+    
+    
+		
        
        //draw the hour hand
        
