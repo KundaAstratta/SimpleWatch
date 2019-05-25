@@ -4,8 +4,6 @@ Watch face for garmin forerunner 630
 A simple watch face.
 (if you would like support my job : paypal.me/KundaAstratta)
 
-6.3 : EXTRA LARGE design , NEW end for battery and steps arcs
-
 Possibility : inverse colors background/foreground, choose the same color for hands clock as inner and outer arcs, and large or small arc for battery and steps
 
 The color of two grey circles change when the time pass
@@ -23,17 +21,3 @@ Bottom semi circle for battery and top for steps / steps goal
 Just use it and your comments are welcome
 
 Please contact me if you would like some additional features or report issues.
-
-2.0 :
-
-- New color for minute hand (lite gray)
-
-When phone disconnected, a different icon appear instead of the date
-
-If notifications an other icon
-
-Enjoy !
-
-1.1 :
-
-- More devices supported
