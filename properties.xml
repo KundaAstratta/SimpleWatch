@@ -1,0 +1,9 @@
+<properties>
+    <property id="ArcColorOut" type="number">0</property>
+    <property id="ArcColorIn" type="number">0</property>
+    <property id="LargeArc" type="number">0</property>
+    <property id="ShowBatteryArc" type="number">0</property>	
+    <property id ="ShowStepsArc" type="number">0</property>		
+    <property id ="InversColor" type="number">0</property>		
+    <property id ="ColorHand" type="number">0</property>
+</properties>
