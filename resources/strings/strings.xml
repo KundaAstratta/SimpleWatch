@@ -1,0 +1,27 @@
+<strings>
+    <string id="AppName">SimpleWatch</string>
+    <string id="ArcColorOut">Outer Arc Color</string>
+    <string id="ArcColorIn">Inner Arc Color</string>
+    <string id="LargeArc">Large arc for steps, battery ?</string>
+    <string id="ShowBatteryArc">Show battery arc ?</string> 
+    <string id="ShowStepsArc">Show step arc ?</string> 
+    <string id="InversColor">Inverse Color ?</string>  
+    <string id="ColorHand">Same Color as arc ?</string> 
+    <string id="ShowYes">Yes</string> 
+    <string id="ShowNo">No</string>  
+    <string id="ShowXL">Extra Large</string> 
+    <string id="ShowAwake">Show When Awake</string>     
+    <string id="ColorWhite">White</string>    
+    <string id="ColorGray">Gray</string>
+    <string id="ColorRed">Bright Red</string>
+    <string id="ColorDarkRed">Dark Red</string>
+    <string id="ColorOrange">Orange</string>
+    <string id="ColorYellow">Yellow</string>
+    <string id="ColorPurple">Purple</string>
+    <string id="ColorPink">Pink</string>
+	<string id="ColorGreen">Green</string>
+	<string id="ColorDarkGreen">Dark Green</string>
+	<string id="ColorBlue">Blue</string>
+	<string id="ColorDarkBlue">Dark Blue</string>
+	<string id="ColorBlack">Black</string>
+</strings>

@@ -1,0 +1,7 @@
+<drawables>
+    <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <bitmap id="Notification" filename="notification.png" />
+    <bitmap id="NotificationBlack" filename="notificationblack.png" />
+    <bitmap id="Notconnected" filename="notconnected.png" />
+    <bitmap id="NotconnectedBlack" filename="notconnectedblack.png" />
+</drawables>

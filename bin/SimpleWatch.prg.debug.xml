@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<debugInfo>
+    <manifest filename="/Users/chumbert/Code/connectiq/SimpleWatch/manifest.xml"/>
+    <pcToLineNum>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="1" lineNum="29" parent="globals/SimpleWatchView" pc="268435456" symbol="initialize"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="1" lineNum="30" parent="globals/SimpleWatchView" pc="268435460" symbol="initialize"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="2" lineNum="34" parent="globals/SimpleWatchView" pc="268435479" symbol="onLayout"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="3" lineNum="41" parent="globals/SimpleWatchView" pc="268435484" symbol="onShow"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="45" parent="globals/SimpleWatchView" pc="268435489" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="48" parent="globals/SimpleWatchView" pc="268435493" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="49" parent="globals/SimpleWatchView" pc="268435512" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="50" parent="globals/SimpleWatchView" pc="268435531" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="51" parent="globals/SimpleWatchView" pc="268435544" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="54" parent="globals/SimpleWatchView" pc="268435554" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="55" parent="globals/SimpleWatchView" pc="268435561" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="56" parent="globals/SimpleWatchView" pc="268435568" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="57" parent="globals/SimpleWatchView" pc="268435575" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="58" parent="globals/SimpleWatchView" pc="268435582" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="59" parent="globals/SimpleWatchView" pc="268435589" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="60" parent="globals/SimpleWatchView" pc="268435596" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="61" parent="globals/SimpleWatchView" pc="268435603" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="64" parent="globals/SimpleWatchView" pc="268435610" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="66" parent="globals/SimpleWatchView" pc="268435641" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="67" parent="globals/SimpleWatchView" pc="268435682" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="69" parent="globals/SimpleWatchView" pc="268435714" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="70" parent="globals/SimpleWatchView" pc="268435721" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="71" parent="globals/SimpleWatchView" pc="268435728" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="72" parent="globals/SimpleWatchView" pc="268435735" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="73" parent="globals/SimpleWatchView" pc="268435742" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="74" parent="globals/SimpleWatchView" pc="268435749" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="75" parent="globals/SimpleWatchView" pc="268435756" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="76" parent="globals/SimpleWatchView" pc="268435763" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="79" parent="globals/SimpleWatchView" pc="268435770" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="80" parent="globals/SimpleWatchView" pc="268435781" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="81" parent="globals/SimpleWatchView" pc="268435788" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="82" parent="globals/SimpleWatchView" pc="268435795" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="83" parent="globals/SimpleWatchView" pc="268435802" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="84" parent="globals/SimpleWatchView" pc="268435809" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="89" parent="globals/SimpleWatchView" pc="268435822" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="90" parent="globals/SimpleWatchView" pc="268435829" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="91" parent="globals/SimpleWatchView" pc="268435836" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="92" parent="globals/SimpleWatchView" pc="268435843" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="93" parent="globals/SimpleWatchView" pc="268435850" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="94" parent="globals/SimpleWatchView" pc="268435857" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="95" parent="globals/SimpleWatchView" pc="268435864" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="96" parent="globals/SimpleWatchView" pc="268435871" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="99" parent="globals/SimpleWatchView" pc="268435878" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="100" parent="globals/SimpleWatchView" pc="268435889" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="101" parent="globals/SimpleWatchView" pc="268435896" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="102" parent="globals/SimpleWatchView" pc="268435903" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="103" parent="globals/SimpleWatchView" pc="268435910" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="104" parent="globals/SimpleWatchView" pc="268435917" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="111" parent="globals/SimpleWatchView" pc="268435930" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="113" parent="globals/SimpleWatchView" pc="268435937" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="115" parent="globals/SimpleWatchView" pc="268435944" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="117" parent="globals/SimpleWatchView" pc="268435951" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="119" parent="globals/SimpleWatchView" pc="268435958" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="121" parent="globals/SimpleWatchView" pc="268435965" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="123" parent="globals/SimpleWatchView" pc="268435972" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="125" parent="globals/SimpleWatchView" pc="268435979" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="128" parent="globals/SimpleWatchView" pc="268435986" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="129" parent="globals/SimpleWatchView" pc="268435997" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="130" parent="globals/SimpleWatchView" pc="268436004" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="131" parent="globals/SimpleWatchView" pc="268436011" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="132" parent="globals/SimpleWatchView" pc="268436018" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="133" parent="globals/SimpleWatchView" pc="268436025" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="134" parent="globals/SimpleWatchView" pc="268436032" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="135" parent="globals/SimpleWatchView" pc="268436039" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="143" parent="globals/SimpleWatchView" pc="268436049" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="145" parent="globals/SimpleWatchView" pc="268436056" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="147" parent="globals/SimpleWatchView" pc="268436063" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="150" parent="globals/SimpleWatchView" pc="268436070" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="151" parent="globals/SimpleWatchView" pc="268436074" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="152" parent="globals/SimpleWatchView" pc="268436078" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="153" parent="globals/SimpleWatchView" pc="268436085" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="156" parent="globals/SimpleWatchView" pc="268436085" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="159" parent="globals/SimpleWatchView" pc="268436097" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="160" parent="globals/SimpleWatchView" pc="268436104" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="161" parent="globals/SimpleWatchView" pc="268436118" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="162" parent="globals/SimpleWatchView" pc="268436132" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="164" parent="globals/SimpleWatchView" pc="268436163" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="165" parent="globals/SimpleWatchView" pc="268436174" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="166" parent="globals/SimpleWatchView" pc="268436188" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="168" parent="globals/SimpleWatchView" pc="268436205" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="169" parent="globals/SimpleWatchView" pc="268436219" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="174" parent="globals/SimpleWatchView" pc="268436233" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="175" parent="globals/SimpleWatchView" pc="268436259" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="179" parent="globals/SimpleWatchView" pc="268436277" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="180" parent="globals/SimpleWatchView" pc="268436291" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="182" parent="globals/SimpleWatchView" pc="268436327" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="184" parent="globals/SimpleWatchView" pc="268436345" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="185" parent="globals/SimpleWatchView" pc="268436359" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="187" parent="globals/SimpleWatchView" pc="268436395" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="192" parent="globals/SimpleWatchView" pc="268436416" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="193" parent="globals/SimpleWatchView" pc="268436433" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="194" parent="globals/SimpleWatchView" pc="268436443" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="195" parent="globals/SimpleWatchView" pc="268436453" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="198" parent="globals/SimpleWatchView" pc="268436463" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="199" parent="globals/SimpleWatchView" pc="268436473" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="200" parent="globals/SimpleWatchView" pc="268436486" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="201" parent="globals/SimpleWatchView" pc="268436514" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="204" parent="globals/SimpleWatchView" pc="268436533" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="205" parent="globals/SimpleWatchView" pc="268436546" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="206" parent="globals/SimpleWatchView" pc="268436559" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="213" parent="globals/SimpleWatchView" pc="268436572" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="214" parent="globals/SimpleWatchView" pc="268436576" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="218" parent="globals/SimpleWatchView" pc="268436595" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="220" parent="globals/SimpleWatchView" pc="268436624" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="227" parent="globals/SimpleWatchView" pc="268436653" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="232" parent="globals/SimpleWatchView" pc="268436684" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="239" parent="globals/SimpleWatchView" pc="268436698" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="240" parent="globals/SimpleWatchView" pc="268436715" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="242" parent="globals/SimpleWatchView" pc="268436732" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="247" parent="globals/SimpleWatchView" pc="268436746" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="248" parent="globals/SimpleWatchView" pc="268436763" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="249" parent="globals/SimpleWatchView" pc="268436794" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="252" parent="globals/SimpleWatchView" pc="268436804" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="253" parent="globals/SimpleWatchView" pc="268436833" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="255" parent="globals/SimpleWatchView" pc="268436833" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="260" parent="globals/SimpleWatchView" pc="268436837" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="261" parent="globals/SimpleWatchView" pc="268436848" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="262" parent="globals/SimpleWatchView" pc="268436852" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="263" parent="globals/SimpleWatchView" pc="268436863" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="267" parent="globals/SimpleWatchView" pc="268436883" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="271" parent="globals/SimpleWatchView" pc="268436887" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="272" parent="globals/SimpleWatchView" pc="268436901" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="273" parent="globals/SimpleWatchView" pc="268436932" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="275" parent="globals/SimpleWatchView" pc="268436947" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="276" parent="globals/SimpleWatchView" pc="268436961" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="277" parent="globals/SimpleWatchView" pc="268436992" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="279" parent="globals/SimpleWatchView" pc="268437007" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="280" parent="globals/SimpleWatchView" pc="268437033" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="282" parent="globals/SimpleWatchView" pc="268437063" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="283" parent="globals/SimpleWatchView" pc="268437077" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="284" parent="globals/SimpleWatchView" pc="268437103" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="287" parent="globals/SimpleWatchView" pc="268437155" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="288" parent="globals/SimpleWatchView" pc="268437181" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="291" parent="globals/SimpleWatchView" pc="268437208" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="292" parent="globals/SimpleWatchView" pc="268437222" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="293" parent="globals/SimpleWatchView" pc="268437248" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="298" parent="globals/SimpleWatchView" pc="268437303" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="300" parent="globals/SimpleWatchView" pc="268437332" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="302" parent="globals/SimpleWatchView" pc="268437364" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="303" parent="globals/SimpleWatchView" pc="268437401" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="304" parent="globals/SimpleWatchView" pc="268437412" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="306" parent="globals/SimpleWatchView" pc="268437452" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="309" parent="globals/SimpleWatchView" pc="268437479" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="310" parent="globals/SimpleWatchView" pc="268437505" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="314" parent="globals/SimpleWatchView" pc="268437556" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="315" parent="globals/SimpleWatchView" pc="268437593" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="316" parent="globals/SimpleWatchView" pc="268437604" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="318" parent="globals/SimpleWatchView" pc="268437644" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="323" parent="globals/SimpleWatchView" pc="268437668" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="324" parent="globals/SimpleWatchView" pc="268437681" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="331" parent="globals/SimpleWatchView" pc="268437694" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="332" parent="globals/SimpleWatchView" pc="268437701" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="333" parent="globals/SimpleWatchView" pc="268437712" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="334" parent="globals/SimpleWatchView" pc="268437729" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="336" parent="globals/SimpleWatchView" pc="268437739" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="337" parent="globals/SimpleWatchView" pc="268437753" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="345" parent="globals/SimpleWatchView" pc="268437757" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="347" parent="globals/SimpleWatchView" pc="268437783" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="348" parent="globals/SimpleWatchView" pc="268437790" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="349" parent="globals/SimpleWatchView" pc="268437821" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="352" parent="globals/SimpleWatchView" pc="268437863" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="353" parent="globals/SimpleWatchView" pc="268437880" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="355" parent="globals/SimpleWatchView" pc="268437941" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="356" parent="globals/SimpleWatchView" pc="268437958" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="358" parent="globals/SimpleWatchView" pc="268438019" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="359" parent="globals/SimpleWatchView" pc="268438086" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="361" parent="globals/SimpleWatchView" pc="268438111" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="371" parent="globals/SimpleWatchView" pc="268438245" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="372" parent="globals/SimpleWatchView" pc="268438252" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="373" parent="globals/SimpleWatchView" pc="268438283" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="376" parent="globals/SimpleWatchView" pc="268438325" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="377" parent="globals/SimpleWatchView" pc="268438351" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="378" parent="globals/SimpleWatchView" pc="268438412" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="380" parent="globals/SimpleWatchView" pc="268438437" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="392" parent="globals/SimpleWatchView" pc="268438547" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="393" parent="globals/SimpleWatchView" pc="268438578" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="394" parent="globals/SimpleWatchView" pc="268438578" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="396" parent="globals/SimpleWatchView" pc="268438578" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="397" parent="globals/SimpleWatchView" pc="268438589" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="398" parent="globals/SimpleWatchView" pc="268438593" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="400" parent="globals/SimpleWatchView" pc="268438600" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="401" parent="globals/SimpleWatchView" pc="268438604" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="404" parent="globals/SimpleWatchView" pc="268438608" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="405" parent="globals/SimpleWatchView" pc="268438634" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="406" parent="globals/SimpleWatchView" pc="268438651" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="410" parent="globals/SimpleWatchView" pc="268438713" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="411" parent="globals/SimpleWatchView" pc="268438739" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="416" parent="globals/SimpleWatchView" pc="268438805" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="417" parent="globals/SimpleWatchView" pc="268438831" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="423" parent="globals/SimpleWatchView" pc="268438897" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="424" parent="globals/SimpleWatchView" pc="268438923" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="425" parent="globals/SimpleWatchView" pc="268438940" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="429" parent="globals/SimpleWatchView" pc="268439002" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="430" parent="globals/SimpleWatchView" pc="268439028" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="435" parent="globals/SimpleWatchView" pc="268439094" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="436" parent="globals/SimpleWatchView" pc="268439120" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="442" parent="globals/SimpleWatchView" pc="268439186" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="443" parent="globals/SimpleWatchView" pc="268439212" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="445" parent="globals/SimpleWatchView" pc="268439236" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="446" parent="globals/SimpleWatchView" pc="268439262" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="451" parent="globals/SimpleWatchView" pc="268439340" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="452" parent="globals/SimpleWatchView" pc="268439366" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="458" parent="globals/SimpleWatchView" pc="268439444" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="460" parent="globals/SimpleWatchView" pc="268439455" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="461" parent="globals/SimpleWatchView" pc="268439481" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="4" lineNum="463" parent="globals/SimpleWatchView" pc="268439498" symbol="onUpdate"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="5" lineNum="476" parent="globals/SimpleWatchView" pc="268439564" symbol="onHide"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="6" lineNum="480" parent="globals/SimpleWatchView" pc="268439569" symbol="onExitSleep"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="6" lineNum="481" parent="globals/SimpleWatchView" pc="268439573" symbol="onExitSleep"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="6" lineNum="482" parent="globals/SimpleWatchView" pc="268439583" symbol="onExitSleep"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="7" lineNum="488" parent="globals/SimpleWatchView" pc="268439600" symbol="onEnterSleep"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="7" lineNum="489" parent="globals/SimpleWatchView" pc="268439604" symbol="onEnterSleep"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="7" lineNum="490" parent="globals/SimpleWatchView" pc="268439614" symbol="onEnterSleep"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="494" parent="globals/SimpleWatchView" pc="268439631" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="495" parent="globals/SimpleWatchView" pc="268439635" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="536" parent="globals/SimpleWatchView" pc="268439894" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="537" parent="globals/SimpleWatchView" pc="268439907" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="497" parent="globals/SimpleWatchView" pc="268439913" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="498" parent="globals/SimpleWatchView" pc="268439926" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="500" parent="globals/SimpleWatchView" pc="268439929" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="501" parent="globals/SimpleWatchView" pc="268439942" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="503" parent="globals/SimpleWatchView" pc="268439945" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="504" parent="globals/SimpleWatchView" pc="268439958" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="506" parent="globals/SimpleWatchView" pc="268439961" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="507" parent="globals/SimpleWatchView" pc="268439974" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="509" parent="globals/SimpleWatchView" pc="268439977" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="510" parent="globals/SimpleWatchView" pc="268439990" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="512" parent="globals/SimpleWatchView" pc="268439993" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="513" parent="globals/SimpleWatchView" pc="268440006" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="515" parent="globals/SimpleWatchView" pc="268440009" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="516" parent="globals/SimpleWatchView" pc="268440022" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="518" parent="globals/SimpleWatchView" pc="268440025" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="519" parent="globals/SimpleWatchView" pc="268440038" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="521" parent="globals/SimpleWatchView" pc="268440041" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="522" parent="globals/SimpleWatchView" pc="268440054" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="524" parent="globals/SimpleWatchView" pc="268440057" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="525" parent="globals/SimpleWatchView" pc="268440070" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="527" parent="globals/SimpleWatchView" pc="268440073" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="528" parent="globals/SimpleWatchView" pc="268440086" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="530" parent="globals/SimpleWatchView" pc="268440089" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="531" parent="globals/SimpleWatchView" pc="268440102" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="533" parent="globals/SimpleWatchView" pc="268440105" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="8" lineNum="534" parent="globals/SimpleWatchView" pc="268440118" symbol="returnColor"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="9" lineNum="12" parent="globals/SimpleWatchView" pc="268440603" symbol="&lt;init&gt;"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="9" lineNum="16" parent="globals/SimpleWatchView" pc="268440621" symbol="&lt;init&gt;"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="9" lineNum="18" parent="globals/SimpleWatchView" pc="268440647" symbol="&lt;init&gt;"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchView.mc" id="9" lineNum="12" parent="globals/SimpleWatchView" pc="268440603" symbol="&lt;init&gt;"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchBackground.mc" id="11" lineNum="8" parent="globals/Background" pc="268440125" symbol="initialize"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchBackground.mc" id="11" lineNum="9" parent="globals/Background" pc="268440129" symbol="initialize"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchBackground.mc" id="11" lineNum="13" parent="globals/Background" pc="268440150" symbol="initialize"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchBackground.mc" id="12" lineNum="16" parent="globals/Background" pc="268440171" symbol="draw"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchBackground.mc" id="12" lineNum="18" parent="globals/Background" pc="268440175" symbol="draw"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchBackground.mc" id="12" lineNum="19" parent="globals/Background" pc="268440224" symbol="draw"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchBackground.mc" id="13" lineNum="6" parent="globals/Background" pc="268440540" symbol="&lt;init&gt;"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchBackground.mc" id="13" lineNum="6" parent="globals/Background" pc="268440540" symbol="&lt;init&gt;"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchApp.mc" id="15" lineNum="5" parent="globals/SimpleWatchApp" pc="268440237" symbol="initialize"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchApp.mc" id="15" lineNum="6" parent="globals/SimpleWatchApp" pc="268440241" symbol="initialize"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchApp.mc" id="16" lineNum="10" parent="globals/SimpleWatchApp" pc="268440260" symbol="onStart"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchApp.mc" id="17" lineNum="14" parent="globals/SimpleWatchApp" pc="268440265" symbol="onStop"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchApp.mc" id="18" lineNum="18" parent="globals/SimpleWatchApp" pc="268440270" symbol="getInitialView"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchApp.mc" id="18" lineNum="19" parent="globals/SimpleWatchApp" pc="268440274" symbol="getInitialView"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchApp.mc" id="19" lineNum="3" parent="globals/SimpleWatchApp" pc="268440584" symbol="&lt;init&gt;"/>
+        <entry filename="/Users/chumbert/Code/connectiq/SimpleWatch/source/SimpleWatchApp.mc" id="19" lineNum="3" parent="globals/SimpleWatchApp" pc="268440584" symbol="&lt;init&gt;"/>
+        <entry filename="Rez" id="21" lineNum="2" parent="globals/Rez/Drawables" pc="268440578" symbol="&lt;init&gt;"/>
+        <entry filename="Rez" id="22" lineNum="10" parent="globals/Rez/Fonts" pc="268440580" symbol="&lt;init&gt;"/>
+        <entry filename="Rez" id="23" lineNum="12" parent="globals/Rez/JsonData" pc="268440582" symbol="&lt;init&gt;"/>
+        <entry filename="Rez" id="24" lineNum="21" parent="globals/Rez/Layouts" pc="268440312" symbol="WatchFace"/>
+        <entry filename="Rez" id="24" lineNum="23" parent="globals/Rez/Layouts" pc="268440324" symbol="WatchFace"/>
+        <entry filename="Rez" id="24" lineNum="24" parent="globals/Rez/Layouts" pc="268440348" symbol="WatchFace"/>
+        <entry filename="Rez" id="24" lineNum="26" parent="globals/Rez/Layouts" pc="268440511" symbol="WatchFace"/>
+        <entry filename="Rez" id="25" lineNum="14" parent="globals/Rez/Layouts" pc="268440581" symbol="&lt;init&gt;"/>
+        <entry filename="Rez" id="26" lineNum="31" parent="globals/Rez/Menus" pc="268440579" symbol="&lt;init&gt;"/>
+        <entry filename="Rez" id="27" lineNum="33" parent="globals/Rez/Strings" pc="268440583" symbol="&lt;init&gt;"/>
+        <entry filename="Rez" id="28" lineNum="1" parent="globals/Rez" pc="268440559" symbol="&lt;init&gt;"/>
+        <entry filename="Rez" id="28" lineNum="1" parent="globals/Rez" pc="268440559" symbol="&lt;init&gt;"/>
+    </pcToLineNum>
+    <symbolTable>
+        <entry id="8388639" module="true" symbol="Graphics"/>
+        <entry field="true" id="32" symbol="InversColor"/>
+        <entry field="true" id="47" symbol="stepsNow"/>
+        <entry id="8388632" method="true" symbol="&lt;init&gt;"/>
+        <entry field="true" id="42" symbol="ColorPurple"/>
+        <entry id="4" module="true" symbol="globals/Rez/Menus"/>
+        <entry field="true" id="30" symbol="ColorGreen"/>
+        <entry field="true" id="22" symbol="ColorYellow"/>
+        <entry field="true" id="26" symbol="ColorRed"/>
+        <entry field="true" id="20" symbol="ColorDarkRed"/>
+        <entry field="true" id="40" symbol="ColorGray"/>
+        <entry field="true" id="34" symbol="ArcColorOut"/>
+        <entry field="true" id="8388611" module="true" symbol="Toybox"/>
+        <entry field="true" id="19" symbol="ColorBlue"/>
+        <entry field="true" id="23" symbol="AppName"/>
+        <entry field="true" id="46" symbol="stepsMax"/>
+        <entry id="8" module="true" symbol="globals/Rez/Strings"/>
+        <entry id="8388772" module="true" object="true" symbol="Fonts"/>
+        <entry field="true" id="43" symbol="isAwake"/>
+        <entry id="8388648" module="true" symbol="WatchUi"/>
+        <entry field="true" id="36" symbol="ColorOrange"/>
+        <entry id="2" module="true" symbol="globals/Rez"/>
+        <entry field="true" id="18" symbol="ShowXL"/>
+        <entry id="8389124" method="true" symbol="onUpdate"/>
+        <entry id="8389375" method="true" object="true" symbol="WatchFace"/>
+        <entry field="true" id="8389065" symbol="locY"/>
+        <entry field="true" id="8389064" symbol="locX"/>
+        <entry field="true" id="16" symbol="NotconnectedBlack"/>
+        <entry field="true" id="38" symbol="ShowNo"/>
+        <entry id="8388771" module="true" object="true" symbol="Drawables"/>
+        <entry id="8389348" symbol="font"/>
+        <entry id="12" module="true" symbol="Menus"/>
+        <entry id="6" module="true" symbol="globals/Rez/Layouts"/>
+        <entry id="9" object="true" symbol="SimpleWatchView"/>
+        <entry id="8389122" method="true" symbol="onLayout"/>
+        <entry id="8389376" method="true" symbol="onEnterSleep"/>
+        <entry field="true" id="8389063" symbol="identifier"/>
+        <entry field="true" id="15" symbol="Notconnected"/>
+        <entry id="8389349" symbol="justification"/>
+        <entry field="true" id="29" symbol="ColorWhite"/>
+        <entry field="true" id="33" symbol="ColorDarkBlue"/>
+        <entry id="7" module="true" symbol="globals/Rez/JsonData"/>
+        <entry field="true" id="35" symbol="ColorBlack"/>
+        <entry id="3" module="true" symbol="globals/Rez/Drawables"/>
+        <entry field="true" id="24" symbol="LargeArc"/>
+        <entry field="true" id="41" symbol="ShowYes"/>
+        <entry field="true" id="44" symbol="TWO_PI"/>
+        <entry id="8389377" method="true" symbol="onExitSleep"/>
+        <entry id="10" object="true" symbol="SimpleWatchApp"/>
+        <entry id="8388645" module="true" symbol="Time"/>
+        <entry id="8388769" module="true" object="true" symbol="Rez"/>
+        <entry field="true" id="13" symbol="Notification"/>
+        <entry field="true" id="31" symbol="ShowStepsArc"/>
+        <entry id="8388640" module="true" symbol="Lang"/>
+        <entry id="8390088" module="true" object="true" symbol="JsonData"/>
+        <entry id="8389068" method="true" symbol="draw"/>
+        <entry field="true" id="17" symbol="LauncherIcon"/>
+        <entry id="8388610" symbol="statics"/>
+        <entry id="8389123" method="true" symbol="onShow"/>
+        <entry field="true" id="25" symbol="ColorDarkGreen"/>
+        <entry id="8389350" module="true" symbol="globals"/>
+        <entry id="8388770" module="true" object="true" symbol="Strings"/>
+        <entry id="8390146" module="true" object="true" symbol="Background"/>
+        <entry field="true" id="21" symbol="ShowBatteryArc"/>
+        <entry id="8388702" method="true" symbol="initialize"/>
+        <entry id="8389279" method="true" symbol="onStart"/>
+        <entry field="true" id="45" symbol="ANGLE_ADJUST"/>
+        <entry id="8388641" module="true" symbol="Math"/>
+        <entry field="true" id="48" symbol="stepsPercent"/>
+        <entry id="8389280" method="true" symbol="getInitialView"/>
+        <entry id="49" method="true" symbol="returnColor"/>
+        <entry field="true" id="14" symbol="NotificationBlack"/>
+        <entry id="8389281" method="true" symbol="onStop"/>
+        <entry id="8389347" symbol="color"/>
+        <entry field="true" id="28" symbol="ColorPink"/>
+        <entry field="true" id="39" symbol="ShowAwake"/>
+        <entry field="true" id="37" symbol="ColorHand"/>
+        <entry id="11" module="true" symbol="Layouts"/>
+        <entry id="5" module="true" symbol="globals/Rez/Fonts"/>
+        <entry id="8389125" method="true" symbol="onHide"/>
+        <entry id="8388635" module="true" symbol="Application"/>
+        <entry field="true" id="27" symbol="ArcColorIn"/>
+    </symbolTable>
+    <localVars>
+        <entry arg="true" endPc="268435483" name="dc" stackId="1" startPc="268435479"/>
+        <entry endPc="268437475" name="DrawIconNotification" stackId="45" startPc="268437364"/>
+        <entry endPc="268437667" name="DrawIconConnected" stackId="46" startPc="268437556"/>
+        <entry endPc="268439562" name="width" stackId="47" startPc="268435493"/>
+        <entry endPc="268439562" name="minute_angle" stackId="30" startPc="268435493"/>
+        <entry endPc="268439562" name="center_y" stackId="3" startPc="268435493"/>
+        <entry endPc="268439562" name="center_x" stackId="2" startPc="268435493"/>
+        <entry endPc="268439562" name="pos_min" stackId="21" startPc="268435493"/>
+        <entry endPc="268439562" name="height" stackId="48" startPc="268435493"/>
+        <entry endPc="268439562" name="pos_large" stackId="49" startPc="268435493"/>
+        <entry endPc="268439562" name="xyz_hour" stackId="34" startPc="268435493"/>
+        <entry endPc="268439562" name="color_arc_out" stackId="41" startPc="268435493"/>
+        <entry endPc="268439562" name="diameter" stackId="4" startPc="268435493"/>
+        <entry endPc="268439562" name="color_foreground" stackId="24" startPc="268435493"/>
+        <entry endPc="268439562" name="color_background" stackId="23" startPc="268435493"/>
+        <entry endPc="268439562" name="l_circ_back" stackId="11" startPc="268435493"/>
+        <entry endPc="268439562" name="minute_length" stackId="16" startPc="268435493"/>
+        <entry endPc="268439562" name="hour_fraction" stackId="29" startPc="268435493"/>
+        <entry endPc="268439562" name="color_hand_in" stackId="53" startPc="268435493"/>
+        <entry endPc="268439562" name="PropertiesShowBattery" stackId="51" startPc="268435493"/>
+        <entry endPc="268439562" name="percent_big_circ" stackId="6" startPc="268435493"/>
+        <entry endPc="268439562" name="xyz_min" stackId="33" startPc="268435493"/>
+        <entry endPc="268439562" name="color_hand_out" stackId="54" startPc="268435493"/>
+        <entry endPc="268439562" name="colorPropertiesOut" stackId="42" startPc="268435493"/>
+        <entry endPc="268439562" name="seconde_length" stackId="15" startPc="268435493"/>
+        <entry endPc="268439562" name="pos_l" stackId="13" startPc="268435493"/>
+        <entry endPc="268439562" name="hour" stackId="26" startPc="268435493"/>
+        <entry endPc="268439562" name="arc_radius" stackId="20" startPc="268435493"/>
+        <entry endPc="268439562" name="percent_pos_oth" stackId="9" startPc="268435493"/>
+        <entry endPc="268439562" name="pos_dec" stackId="10" startPc="268435493"/>
+        <entry endPc="268439562" name="battery_color" stackId="40" startPc="268435493"/>
+        <entry endPc="268439562" name="arc_width" stackId="18" startPc="268435493"/>
+        <entry endPc="268439562" name="seconde_angle" stackId="32" startPc="268435493"/>
+        <entry endPc="268439562" name="PropertiesShowSteps" stackId="50" startPc="268435493"/>
+        <entry endPc="268439562" name="sec" stackId="28" startPc="268435493"/>
+        <entry endPc="268439562" name="hour_angle" stackId="31" startPc="268435493"/>
+        <entry endPc="268439562" name="color_arc_in" stackId="43" startPc="268435493"/>
+        <entry endPc="268439562" name="arc_height" stackId="19" startPc="268435493"/>
+        <entry endPc="268439562" name="colorPropertiesIn" stackId="44" startPc="268435493"/>
+        <entry endPc="268439562" name="percent_lit_circ" stackId="7" startPc="268435493"/>
+        <entry endPc="268439562" name="radius" stackId="5" startPc="268435493"/>
+        <entry endPc="268439562" name="now" stackId="25" startPc="268435493"/>
+        <entry endPc="268439562" name="hour_length" stackId="17" startPc="268435493"/>
+        <entry endPc="268439562" name="percent_pos_dat" stackId="8" startPc="268435493"/>
+        <entry endPc="268439562" name="color_sec" stackId="35" startPc="268435493"/>
+        <entry endPc="268439562" name="date" stackId="36" startPc="268435493"/>
+        <entry endPc="268439562" name="info" stackId="37" startPc="268435493"/>
+        <entry endPc="268439562" name="invers_color" stackId="22" startPc="268435493"/>
+        <entry endPc="268439562" name="color_hand" stackId="52" startPc="268435493"/>
+        <entry endPc="268439562" name="large_arc" stackId="14" startPc="268435493"/>
+        <entry endPc="268439562" name="dayDate" stackId="38" startPc="268435493"/>
+        <entry endPc="268439562" name="min" stackId="27" startPc="268435493"/>
+        <entry endPc="268439562" name="l_circ" stackId="12" startPc="268435493"/>
+        <entry endPc="268439562" name="battery" stackId="39" startPc="268435493"/>
+        <entry arg="true" endPc="268439563" name="dc" stackId="1" startPc="268435489"/>
+        <entry arg="true" endPc="268440124" name="colorNum" stackId="1" startPc="268439631"/>
+        <entry endPc="268440169" name="dictionary" stackId="1" startPc="268440129"/>
+        <entry arg="true" endPc="268440236" name="dc" stackId="1" startPc="268440171"/>
+        <entry arg="true" endPc="268440264" name="state" stackId="1" startPc="268440260"/>
+        <entry arg="true" endPc="268440269" name="state" stackId="1" startPc="268440265"/>
+        <entry endPc="268440537" name="rez_cmp_local_text_TimeLabel" stackId="3" startPc="268440324"/>
+        <entry endPc="268440537" name="rez_cmp_local_custom_drawable_16669310601527405873" stackId="2" startPc="268440324"/>
+        <entry arg="true" endPc="268440538" name="dc" stackId="1" startPc="268440312"/>
+    </localVars>
+    <annotations>
+        <annotationEntry annotation="initialized" class="Drawables" module="globals/Rez" symbol="Notification"/>
+        <annotationEntry annotation="initialized" class="Drawables" module="globals/Rez" symbol="NotificationBlack"/>
+        <annotationEntry annotation="initialized" class="Drawables" module="globals/Rez" symbol="Notconnected"/>
+        <annotationEntry annotation="initialized" class="Drawables" module="globals/Rez" symbol="NotconnectedBlack"/>
+        <annotationEntry annotation="initialized" class="Drawables" module="globals/Rez" symbol="LauncherIcon"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ShowXL"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorBlue"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorDarkRed"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ShowBatteryArc"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorYellow"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="AppName"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="LargeArc"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorDarkGreen"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorRed"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ArcColorIn"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorPink"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorWhite"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorGreen"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ShowStepsArc"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="InversColor"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorDarkBlue"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ArcColorOut"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorBlack"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorOrange"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorHand"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ShowNo"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ShowAwake"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorGray"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ShowYes"/>
+        <annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="ColorPurple"/>
+    </annotations>
+    <dataEntryOffsetMappings>
+        <dataEntry label="globals" offset="87" parentId="" symbolId="globals" type="module"/>
+        <dataEntry label="globals/Background" offset="158" parentId="globals" symbolId="Background" type="class"/>
+        <dataEntry label="globals/Rez" offset="213" parentId="globals" symbolId="Rez" type="module"/>
+        <dataEntry label="globals/Rez/Drawables" offset="292" parentId="Rez" symbolId="Drawables" type="module"/>
+        <dataEntry label="globals/Rez/Menus" offset="363" parentId="Rez" symbolId="Menus" type="module"/>
+        <dataEntry label="globals/Rez/Fonts" offset="394" parentId="Rez" symbolId="Fonts" type="module"/>
+        <dataEntry label="globals/Rez/Layouts" offset="425" parentId="Rez" symbolId="Layouts" type="module"/>
+        <dataEntry label="globals/Rez/JsonData" offset="464" parentId="Rez" symbolId="JsonData" type="module"/>
+        <dataEntry label="globals/Rez/Strings" offset="495" parentId="Rez" symbolId="Strings" type="module"/>
+        <dataEntry label="globals/SimpleWatchApp" offset="726" parentId="globals" symbolId="SimpleWatchApp" type="class"/>
+        <dataEntry label="globals/SimpleWatchView" offset="797" parentId="globals" symbolId="SimpleWatchView" type="class"/>
+    </dataEntryOffsetMappings>
+    <functions>
+        <functionEntry accessMode="public" endPc="268435478" name="initialize" parent="SimpleWatchView" startPc="268435456">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435483" name="onLayout" parent="SimpleWatchView" startPc="268435479">
+            <param id="dc"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268435488" name="onShow" parent="SimpleWatchView" startPc="268435484">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268439563" name="onUpdate" parent="SimpleWatchView" startPc="268435489">
+            <param id="dc"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268439568" name="onHide" parent="SimpleWatchView" startPc="268439564">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268439599" name="onExitSleep" parent="SimpleWatchView" startPc="268439569">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268439630" name="onEnterSleep" parent="SimpleWatchView" startPc="268439600">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268440124" name="returnColor" parent="SimpleWatchView" startPc="268439631">
+            <param id="colorNum"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="protected" endPc="268440673" name="&lt;init&gt;" parent="SimpleWatchView" startPc="268440603">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268440170" name="initialize" parent="Background" startPc="268440125">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268440236" name="draw" parent="Background" startPc="268440171">
+            <param id="dc"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="protected" endPc="268440558" name="&lt;init&gt;" parent="Background" startPc="268440540">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268440259" name="initialize" parent="SimpleWatchApp" startPc="268440237">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268440264" name="onStart" parent="SimpleWatchApp" startPc="268440260">
+            <param id="state"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268440269" name="onStop" parent="SimpleWatchApp" startPc="268440265">
+            <param id="state"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268440311" name="getInitialView" parent="SimpleWatchApp" startPc="268440270">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="protected" endPc="268440602" name="&lt;init&gt;" parent="SimpleWatchApp" startPc="268440584">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="protected" endPc="268440578" name="&lt;init&gt;" parent="Drawables" startPc="268440578">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="protected" endPc="268440580" name="&lt;init&gt;" parent="Fonts" startPc="268440580">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="protected" endPc="268440582" name="&lt;init&gt;" parent="JsonData" startPc="268440582">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="public" endPc="268440538" name="WatchFace" parent="Layouts" startPc="268440312">
+            <param id="dc"/>
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="protected" endPc="268440581" name="&lt;init&gt;" parent="Layouts" startPc="268440581">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="protected" endPc="268440579" name="&lt;init&gt;" parent="Menus" startPc="268440579">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="protected" endPc="268440583" name="&lt;init&gt;" parent="Strings" startPc="268440583">
+            <documentation/>
+        </functionEntry>
+        <functionEntry accessMode="protected" endPc="268440577" name="&lt;init&gt;" parent="Rez" startPc="268440559">
+            <documentation/>
+        </functionEntry>
+    </functions>
+</debugInfo>
