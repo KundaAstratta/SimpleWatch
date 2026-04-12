@@ -7,11 +7,13 @@ using Toybox.ActivityMonitor as Act;
 using Toybox.Time as Time;
 using Toybox.Time.Gregorian as Calendar;
 using Toybox.Application as App;
+using Toybox.Application.Properties as Properties;
 
 
 class SimpleWatchView extends Ui.WatchFace {
-    // Awake state
-    var isAwake;
+    // Awake state — starts true (watchface launches in awake state per Garmin lifecycle)
+    // onEnterSleep() sets it false, onExitSleep() sets it back true
+    var isAwake = true;
     // 2 pi
     var TWO_PI = Math.PI * 2;
     // Angle adjust for time hands (start from 12 o'clock)
@@ -58,6 +60,7 @@ class SimpleWatchView extends Ui.WatchFace {
         var timeData = computeTimeData();
 
         drawBackground(dc, layout, colors);
+        drawTickMarks(dc, layout, colors);
         drawTimeArcs(dc, layout, colors, timeData);
         drawStatusIndicators(dc, layout, colors, timeData);
         drawProgressArcs(dc, layout, colors, timeData);
@@ -70,7 +73,7 @@ class SimpleWatchView extends Ui.WatchFace {
         var center_y = dc.getHeight() / 2;
         var radius   = center_x;
 
-        var large_arc = App.getApp().getProperty("LargeArc");
+        var large_arc = Properties.getValue("LargeArc");
 
         // Default layout values match semi-round devices
         var percent_big_circ = 0.80;
@@ -150,7 +153,7 @@ class SimpleWatchView extends Ui.WatchFace {
 
     // Returns a dictionary of colors derived from theme and user settings
     function computeColors() {
-        var invers_color = App.getApp().getProperty("InversColor");
+        var invers_color = Properties.getValue("InversColor");
         var color_background;
         var color_foreground;
         if (invers_color == 0) {
@@ -161,10 +164,10 @@ class SimpleWatchView extends Ui.WatchFace {
             color_foreground = Gfx.COLOR_BLACK;
         }
 
-        var color_arc_out = returnColor(App.getApp().getProperty("ArcColorOut"));
-        var color_arc_in  = returnColor(App.getApp().getProperty("ArcColorIn"));
+        var color_arc_out = returnColor(Properties.getValue("ArcColorOut"));
+        var color_arc_in  = returnColor(Properties.getValue("ArcColorIn"));
 
-        var color_hand = App.getApp().getProperty("ColorHand");
+        var color_hand = Properties.getValue("ColorHand");
         var color_hand_in;
         var color_hand_out;
         if (color_hand == 0) {
@@ -237,10 +240,167 @@ class SimpleWatchView extends Ui.WatchFace {
         dc.setColor(colors[:color_background], Gfx.COLOR_TRANSPARENT);
         dc.fillCircle(cx, cy, radius * 2);
 
+        if (isAwake) {
+            drawConcentricBackground(dc, cx, cy, radius);
+            drawStarField(dc, cx, cy, radius);
+        }
+
+        var inner_r = arc_radius * layout[:percent_lit_circ];
+        // Dark guide circles — very dim in sleep to reduce AMOLED luminance
         dc.setPenWidth(l_circ_back);
-        dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_TRANSPARENT);
+        dc.setColor(isAwake ? Gfx.COLOR_DK_GRAY : 0x1a1a1a, Gfx.COLOR_TRANSPARENT);
         dc.drawCircle(cx, cy, arc_radius);
-        dc.drawCircle(cx, cy, arc_radius * layout[:percent_lit_circ]);
+        dc.drawCircle(cx, cy, inner_r);
+        // 3D rims: bright inner edge + dim outer shadow (awake only)
+        if (isAwake) {
+            dc.setPenWidth(1);
+            dc.setColor(0x505050, Gfx.COLOR_TRANSPARENT);
+            dc.drawCircle(cx, cy, arc_radius - l_circ_back / 2 + 1);
+            dc.drawCircle(cx, cy, inner_r - l_circ_back / 2 + 1);
+            dc.setColor(0x2a2a2a, Gfx.COLOR_TRANSPARENT);
+            dc.drawCircle(cx, cy, arc_radius + l_circ_back / 2);
+            dc.drawCircle(cx, cy, inner_r + l_circ_back / 2);
+        }
+    }
+
+    // Draws a dark navy radial gradient from center (very dark) to edge (dark teal)
+    function drawConcentricBackground(dc, cx, cy, radius) {
+        var numRings = 30;
+        var maxRadius = radius + 10;
+
+        var startR = 0;   var startG = 0x05; var startB = 0x10;
+        var endR   = 0;   var endG   = 0x30; var endB   = 0x50;
+
+        for (var i = numRings - 1; i >= 0; i--) {
+            var ratio = i.toFloat() / (numRings - 1);
+            var r = (startR + (endR - startR) * ratio).toLong();
+            var g = (startG + (endG - startG) * ratio).toLong();
+            var b = (startB + (endB - startB) * ratio).toLong();
+            var color = ((r << 16) | (g << 8) | b).toNumber();
+            var ringRadius = maxRadius * (i + 1) / numRings;
+            dc.setColor(color, Gfx.COLOR_TRANSPARENT);
+            dc.fillCircle(cx, cy, ringRadius);
+        }
+    }
+
+    // Draws ~150 stars using a deterministic PRNG, clipped to the circular screen
+    function drawStarField(dc, cx, cy, radius) {
+        dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
+        var numStars = 150;
+        var diameter = radius * 2;
+        var seed = 1;
+
+        for (var i = 0; i < numStars; i++) {
+            seed = (seed * 1664525 + 1013904223) & 0x7FFFFFFF;
+            var x = seed % diameter;
+            seed = (seed * 1664525 + 1013904223) & 0x7FFFFFFF;
+            var y = seed % diameter;
+            seed = (seed * 1664525 + 1013904223) & 0x7FFFFFFF;
+            var size = (seed % 10 > 7) ? 2 : 1;
+
+            var dx = x - radius;
+            var dy = y - radius;
+            if (dx * dx + dy * dy <= radius * radius) {
+                dc.fillCircle(cx - radius + x, cy - radius + y, size);
+            }
+        }
+    }
+
+    // Draws 12 beveled rectangular tick marks (major at 12/3/6/9, minor elsewhere)
+    function drawTickMarks(dc, layout, colors) {
+        var cx         = layout[:center_x];
+        var cy         = layout[:center_y];
+        var arc_radius = layout[:arc_radius];
+        var l_circ     = layout[:l_circ];
+        var fg         = colors[:color_foreground];
+
+        var major_len = (l_circ * 1.8).toNumber();
+        var minor_len = (l_circ * 1.0).toNumber();
+
+        for (var i = 0; i < 12; i++) {
+            // Sleep mode: only 4 cardinal marks (12/3/6/9) to reduce lit pixels
+            if (!isAwake && i % 3 != 0) { continue; }
+
+            var angle   = (i * 30 - 90) * Math.PI / 180.0;
+            var isMajor = (i % 3 == 0);
+            var len     = isMajor ? major_len : minor_len;
+            var cos_a   = Math.cos(angle);
+            var sin_a   = Math.sin(angle);
+            // 12h marker is wider for distinction
+            var half_w  = (i == 0) ? 3.5 : (isMajor ? 2.5 : 1.5);
+            var px      = -sin_a;
+            var py      = cos_a;
+
+            var outerX = cx + arc_radius * cos_a;
+            var outerY = cy + arc_radius * sin_a;
+            var innerX = cx + (arc_radius - len) * cos_a;
+            var innerY = cy + (arc_radius - len) * sin_a;
+
+            var p1 = [(outerX + half_w * px).toNumber(), (outerY + half_w * py).toNumber()];
+            var p2 = [(outerX - half_w * px).toNumber(), (outerY - half_w * py).toNumber()];
+            var p3 = [(innerX - half_w * px).toNumber(), (innerY - half_w * py).toNumber()];
+            var p4 = [(innerX + half_w * px).toNumber(), (innerY + half_w * py).toNumber()];
+
+            if (isAwake) {
+                // Shadow (offset +1,+1)
+                dc.setColor(0x111111, Gfx.COLOR_TRANSPARENT);
+                dc.fillPolygon([[p1[0]+1, p1[1]+1], [p2[0]+1, p2[1]+1],
+                                [p3[0]+1, p3[1]+1], [p4[0]+1, p4[1]+1]]);
+            }
+
+            // Main rectangle — dim in sleep
+            dc.setColor(isAwake ? fg : 0x282828, Gfx.COLOR_TRANSPARENT);
+            dc.fillPolygon([p1, p2, p3, p4]);
+
+            // Rounded end caps (awake only)
+            if (isAwake) {
+                dc.fillCircle(outerX.toNumber(), outerY.toNumber(), 1);
+                dc.fillCircle(innerX.toNumber(), innerY.toNumber(), 1);
+                // Bevel highlight along left edge
+                dc.setColor(lightenColor(fg), Gfx.COLOR_TRANSPARENT);
+                dc.setPenWidth(1);
+                dc.drawLine(p1[0], p1[1], p4[0], p4[1]);
+            }
+        }
+
+        // 60 minute graduation dots between main ticks (awake only)
+        if (isAwake) {
+            dc.setColor(darkenColor(fg), Gfx.COLOR_TRANSPARENT);
+            for (var i = 0; i < 60; i++) {
+                if (i % 5 == 0) { continue; }
+                var a = (i * 6 - 90) * Math.PI / 180.0;
+                dc.fillCircle(
+                    (cx + arc_radius * Math.cos(a)).toNumber(),
+                    (cy + arc_radius * Math.sin(a)).toNumber(),
+                    1
+                );
+            }
+        }
+
+        // Lume pip: double-ring Super-LumiNova style at 12h (awake only)
+        if (isAwake) {
+            var pip_dist  = arc_radius - major_len - l_circ * 0.8;
+            var pip_y     = (cy - pip_dist).toNumber();
+            var pip_color = colors[:color_arc_out];
+            // Outer dim halo ring
+            dc.setColor(darkenColor(pip_color), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawCircle(cx, pip_y, 6);
+            // Shadow
+            dc.setColor(0x111111, Gfx.COLOR_TRANSPARENT);
+            dc.fillCircle(cx + 1, pip_y + 1, 3);
+            // Main pip
+            dc.setColor(pip_color, Gfx.COLOR_TRANSPARENT);
+            dc.fillCircle(cx, pip_y, 3);
+            // Bright inner rim
+            dc.setColor(lightenColor(pip_color), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawCircle(cx, pip_y, 3);
+            // Bright outer ring
+            dc.setColor(pip_color, Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawCircle(cx, pip_y, 5);
+        }
     }
 
     // Draws the hour (inner) and minute (outer) progress arcs
@@ -250,27 +410,84 @@ class SimpleWatchView extends Ui.WatchFace {
         var arc_radius       = layout[:arc_radius];
         var percent_lit_circ = layout[:percent_lit_circ];
         var l_circ           = layout[:l_circ];
+        var l_circ_back      = layout[:l_circ_back];
 
         var color_arc_in  = colors[:color_arc_in];
         var color_arc_out = colors[:color_arc_out];
         var xyz_hour      = timeData[:xyz_hour];
         var xyz_min       = timeData[:xyz_min];
 
+        var inner_r      = arc_radius * percent_lit_circ;
+        var hour_end_deg = 90 - 360 * xyz_hour;
+        var min_end_deg  = 90 - 360 * xyz_min / 60;
+
+        var cap_r = l_circ * ARC_CAP_RATIO;
+
+        // "Remaining" dim track — draws only the unelapsed portion of each arc
+        // Uses ARC_COUNTER_CLOCKWISE from 12h to arc-tip = the opposite angular sweep
+        // This is angularly distinct from the elapsed arcs and cannot overlap with
+        // effective_radius (the progress arcs live at a different radius entirely)
+        dc.setPenWidth(l_circ_back);
+        dc.setColor(darkenColor(darkenColor(color_arc_in)), Gfx.COLOR_TRANSPARENT);
+        dc.drawArc(cx, cy, inner_r, Gfx.ARC_COUNTER_CLOCKWISE, 90, hour_end_deg);
+        dc.setColor(darkenColor(darkenColor(color_arc_out)), Gfx.COLOR_TRANSPARENT);
+        dc.drawArc(cx, cy, arc_radius, Gfx.ARC_COUNTER_CLOCKWISE, 90, min_end_deg);
+
         // Inner arc: hour progress
-        dc.setColor(color_arc_in, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(cx, cy - arc_radius * percent_lit_circ, l_circ * ARC_CAP_RATIO);
-        dc.setPenWidth(l_circ);
-        dc.drawArc(cx, cy, arc_radius * percent_lit_circ, Gfx.ARC_CLOCKWISE, 90, 90 - 360 * xyz_hour);
+        if (isAwake) {
+            dc.setColor(darkenColor(darkenColor(color_arc_in)), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(l_circ + 6);
+            dc.drawArc(cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
+            dc.setColor(darkenColor(color_arc_in), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(l_circ + 2);
+            dc.drawArc(cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
+            dc.setColor(color_arc_in, Gfx.COLOR_TRANSPARENT);
+            dc.fillCircle(cx, (cy - inner_r).toNumber(), cap_r);
+            dc.setPenWidth(l_circ);
+            dc.drawArc(cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
+            var h_end_rad = hour_end_deg * Math.PI / 180.0;
+            dc.fillCircle((cx + inner_r * Math.cos(h_end_rad)).toNumber(),
+                          (cy - inner_r * Math.sin(h_end_rad)).toNumber(), cap_r);
+            dc.setColor(lightenColor(color_arc_in), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawArc(cx, cy, inner_r - l_circ / 2 + 1, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
+        } else {
+            // Sleep: single 1px dim arc, no caps
+            dc.setColor(0x1a1a1a, Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawArc(cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
+        }
 
         // Outer arc: minute progress
-        dc.setColor(color_arc_out, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(cx, cy - arc_radius, l_circ * ARC_CAP_RATIO);
-        dc.setPenWidth(l_circ);
-        dc.drawArc(cx, cy, arc_radius, Gfx.ARC_CLOCKWISE, 90, 90 - 360 * xyz_min / 60);
+        if (isAwake) {
+            dc.setColor(darkenColor(darkenColor(color_arc_out)), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(l_circ + 6);
+            dc.drawArc(cx, cy, arc_radius, Gfx.ARC_CLOCKWISE, 90, min_end_deg);
+            dc.setColor(darkenColor(color_arc_out), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(l_circ + 2);
+            dc.drawArc(cx, cy, arc_radius, Gfx.ARC_CLOCKWISE, 90, min_end_deg);
+            dc.setColor(color_arc_out, Gfx.COLOR_TRANSPARENT);
+            dc.fillCircle(cx, (cy - arc_radius).toNumber(), cap_r);
+            dc.setPenWidth(l_circ);
+            dc.drawArc(cx, cy, arc_radius, Gfx.ARC_CLOCKWISE, 90, min_end_deg);
+            var m_end_rad = min_end_deg * Math.PI / 180.0;
+            dc.fillCircle((cx + arc_radius * Math.cos(m_end_rad)).toNumber(),
+                          (cy - arc_radius * Math.sin(m_end_rad)).toNumber(), cap_r);
+            dc.setColor(lightenColor(color_arc_out), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawArc(cx, cy, arc_radius - l_circ / 2 + 1, Gfx.ARC_CLOCKWISE, 90, min_end_deg);
+        } else {
+            // Sleep: single 1px dim arc, no caps
+            dc.setColor(0x1a1a1a, Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawArc(cx, cy, arc_radius, Gfx.ARC_CLOCKWISE, 90, min_end_deg);
+        }
     }
 
     // Draws the phone-connection icon, notification icon, or date on the right side
+    // Hidden in sleep mode to conserve power and simplify display
     function drawStatusIndicators(dc, layout, colors, timeData) {
+        if (!isAwake) { return; }
         var cx              = layout[:center_x];
         var cy              = layout[:center_y];
         var radius          = layout[:radius];
@@ -290,8 +507,31 @@ class SimpleWatchView extends Ui.WatchFace {
                 }
                 dc.drawBitmap(cx + radius * percent_pos_oth, cy, icon);
             } else {
+                // Date window: beveled box with date text
+                var date_cx = (cx + radius * percent_pos_dat).toNumber();
+                var font_h  = dc.getFontHeight(Gfx.FONT_TINY);
+                var text_w  = dc.getTextWidthInPixels(timeData[:dayDate].toString(), Gfx.FONT_TINY);
+                var dw = text_w + 10; var dh = font_h + 4;
+                var dx = date_cx - dw / 2;
+                var dy = cy - 2;  // top of box, text draws from here + 2px padding
+                // Shadow
+                dc.setColor(0x111111, Gfx.COLOR_TRANSPARENT);
+                dc.fillRectangle(dx + 2, dy + 2, dw, dh);
+                // Dark background
+                dc.setColor(0x1a1a2a, Gfx.COLOR_TRANSPARENT);
+                dc.fillRectangle(dx, dy, dw, dh);
+                // Outer border
+                dc.setColor(0x2a2a2a, Gfx.COLOR_TRANSPARENT);
+                dc.setPenWidth(1);
+                dc.drawRectangle(dx, dy, dw, dh);
+                // Inner bevel: bright top and left edges
+                dc.setColor(0x505050, Gfx.COLOR_TRANSPARENT);
+                dc.drawLine(dx, dy, dx + dw - 1, dy);
+                dc.drawLine(dx, dy, dx, dy + dh - 1);
+                // Date text, top-aligned inside the box with 2px padding
                 dc.setColor(battery_color, Gfx.COLOR_TRANSPARENT);
-                dc.drawText(cx + radius * percent_pos_dat, cy, Gfx.FONT_SMALL, timeData[:dayDate], Gfx.TEXT_JUSTIFY_CENTER);
+                dc.drawText(date_cx, dy + 2, Gfx.FONT_TINY, timeData[:dayDate],
+                            Gfx.TEXT_JUSTIFY_CENTER);
             }
         } else {
             var icon = Ui.loadResource(Rez.Drawables.Notconnected);
@@ -302,8 +542,9 @@ class SimpleWatchView extends Ui.WatchFace {
         }
     }
 
-    // Draws the steps arc (top half) and battery arc (bottom half)
+    // Draws the steps arc (top half) and battery arc (bottom half) — skipped in sleep mode
     function drawProgressArcs(dc, layout, colors, timeData) {
+        if (!isAwake) { return; }
         var cx         = layout[:center_x];
         var cy         = layout[:center_y];
         var arc_radius = layout[:arc_radius];
@@ -320,35 +561,49 @@ class SimpleWatchView extends Ui.WatchFace {
 
         var effective_radius = arc_radius - pos_dec - pos_large;
 
-        if (large_arc == 0) {
-            dc.setPenWidth(3);
-        } else {
-            dc.setPenWidth(l_circ);
-        }
+        var arc_pen = (large_arc == 0) ? 3 : l_circ;
 
-        // Steps arc (top half, counter-clockwise)
-        var showSteps = App.getApp().getProperty("ShowStepsArc");
-        if ((showSteps == 0) or ((showSteps == 2) and (isAwake == true))) {
-            dc.setColor(color_sec, Gfx.COLOR_TRANSPARENT);
-            if (stepsPercent >= 1.0) {
-                dc.drawArc(cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, 180);
-            } else if (stepsPercent <= STEPS_MIN_THRESHOLD) {
-                dc.drawArc(cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, 1);
-            } else {
-                dc.drawArc(cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, stepsPercent * 180);
+        // Steps arc (top half, counter-clockwise) — outer glow + shadow + main + highlight
+        var showSteps = Properties.getValue("ShowStepsArc");
+        if (showSteps == 0) {
+            if (stepsPercent > STEPS_MIN_THRESHOLD) {
+                var steps_end = (stepsPercent >= 1.0) ? 180 : stepsPercent * 180;
+                dc.setColor(darkenColor(darkenColor(color_sec)), Gfx.COLOR_TRANSPARENT);
+                dc.setPenWidth(arc_pen + 4);
+                dc.drawArc(cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
+                dc.setColor(darkenColor(color_sec), Gfx.COLOR_TRANSPARENT);
+                dc.setPenWidth(arc_pen + 1);
+                dc.drawArc(cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
+                dc.setColor(color_sec, Gfx.COLOR_TRANSPARENT);
+                dc.setPenWidth(arc_pen);
+                dc.drawArc(cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
                 if ((large_arc == 1) or (large_arc == 2)) {
                     dc.fillCircle(
                         cx + effective_radius * Math.cos(-Math.PI * stepsPercent),
                         cy + effective_radius * Math.sin(-Math.PI * stepsPercent),
                         l_circ * ARC_CAP_RATIO);
                 }
+                dc.setColor(lightenColor(color_sec), Gfx.COLOR_TRANSPARENT);
+                dc.setPenWidth(1);
+                dc.drawArc(cx, cy, effective_radius - arc_pen / 2 + 1, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
+            } else {
+                dc.setColor(color_sec, Gfx.COLOR_TRANSPARENT);
+                dc.setPenWidth(arc_pen);
+                dc.drawArc(cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, 1);
             }
         }
 
-        // Battery arc (bottom half, clockwise)
-        var showBattery = App.getApp().getProperty("ShowBatteryArc");
-        if ((showBattery == 0) or ((showBattery == 2) and (isAwake == true))) {
+        // Battery arc (bottom half, clockwise) — outer glow + shadow + main + highlight
+        var showBattery = Properties.getValue("ShowBatteryArc");
+        if (showBattery == 0) {
+            dc.setColor(darkenColor(darkenColor(battery_color)), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(arc_pen + 4);
+            dc.drawArc(cx, cy, effective_radius, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
+            dc.setColor(darkenColor(battery_color), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(arc_pen + 1);
+            dc.drawArc(cx, cy, effective_radius, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
             dc.setColor(battery_color, Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(arc_pen);
             dc.drawArc(cx, cy, effective_radius, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
             if ((large_arc == 1) or (large_arc == 2)) {
                 dc.fillCircle(
@@ -356,6 +611,9 @@ class SimpleWatchView extends Ui.WatchFace {
                     cy + effective_radius * Math.sin(Math.PI * battery),
                     l_circ * ARC_CAP_RATIO);
             }
+            dc.setColor(lightenColor(battery_color), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawArc(cx, cy, effective_radius - arc_pen / 2 + 1, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
         }
     }
 
@@ -375,63 +633,185 @@ class SimpleWatchView extends Ui.WatchFace {
         var color_background = colors[:color_background];
         var color_hand_in    = colors[:color_hand_in];
         var color_hand_out   = colors[:color_hand_out];
+        var color_arc_in     = colors[:color_arc_in];
+        var color_arc_out    = colors[:color_arc_out];
 
         var hand_length = percent_big_circ * radius;
         var hour_length = percent_lit_circ * hand_length;
 
-        // Hour hand
-        dc.setColor(color_hand_in, Gfx.COLOR_TRANSPARENT);
-        dc.setPenWidth(HAND_PEN_WIDTH);
-        dc.drawLine(cx, cy,
-            cx + hour_length * Math.cos(hour_angle),
-            cy + hour_length * Math.sin(hour_angle));
-        dc.fillCircle(
-            cx + hour_length * Math.cos(hour_angle),
-            cy + hour_length * Math.sin(hour_angle),
-            radius * HAND_TIP_RATIO);
-        dc.setColor(color_background, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(
-            cx + hour_length * Math.cos(hour_angle),
-            cy + hour_length * Math.sin(hour_angle),
-            radius * HAND_TIP_INNER_RATIO);
+        // Sleep mode: thin dim lines only — minimal luminance
+        if (!isAwake) {
+            var h_cos_s = Math.cos(hour_angle);
+            var h_sin_s = Math.sin(hour_angle);
+            var m_cos_s = Math.cos(minute_angle);
+            var m_sin_s = Math.sin(minute_angle);
+            dc.setPenWidth(2);
+            dc.setColor(0x555555, Gfx.COLOR_TRANSPARENT);
+            dc.drawLine(
+                (cx - hour_length * 0.15 * h_cos_s).toNumber(),
+                (cy - hour_length * 0.15 * h_sin_s).toNumber(),
+                (cx + hour_length * h_cos_s).toNumber(),
+                (cy + hour_length * h_sin_s).toNumber()
+            );
+            dc.drawLine(
+                (cx - hand_length * 0.15 * m_cos_s).toNumber(),
+                (cy - hand_length * 0.15 * m_sin_s).toNumber(),
+                (cx + hand_length * m_cos_s).toNumber(),
+                (cy + hand_length * m_sin_s).toNumber()
+            );
+            dc.setColor(0x282828, Gfx.COLOR_TRANSPARENT);
+            dc.fillCircle(cx, cy, 3);
+            return;
+        }
 
-        // Minute hand
-        dc.setColor(color_hand_out, Gfx.COLOR_TRANSPARENT);
-        dc.setPenWidth(HAND_PEN_WIDTH);
-        dc.drawLine(cx, cy,
-            cx + hand_length * Math.cos(minute_angle),
-            cy + hand_length * Math.sin(minute_angle));
-        dc.fillCircle(
-            cx + hand_length * Math.cos(minute_angle),
-            cy + hand_length * Math.sin(minute_angle),
-            radius * HAND_TIP_RATIO);
-        dc.setColor(color_background, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(
-            cx + hand_length * Math.cos(minute_angle),
-            cy + hand_length * Math.sin(minute_angle),
-            radius * HAND_TIP_INNER_RATIO);
+        var hour_tail   = hour_length * 0.15;
+        var minute_tail = hand_length * 0.15;
 
-        // Center hub
-        dc.setColor(color_background, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(cx, cy, radius * CENTER_CIRCLE_RATIO);
-        dc.setColor(color_hand_in, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(
-            cx + radius * CENTER_CIRCLE_RATIO * Math.cos(hour_angle),
-            cy + radius * CENTER_CIRCLE_RATIO * Math.sin(hour_angle),
-            radius * HAND_TIP_RATIO);
-        dc.setColor(color_hand_out, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(
-            cx + radius * CENTER_CIRCLE_RATIO * Math.cos(minute_angle),
-            cy + radius * CENTER_CIRCLE_RATIO * Math.sin(minute_angle),
-            radius * HAND_TIP_RATIO);
-
-        // Second hand (only when awake to save battery)
+        // --- Hour hand: 5-point Dauphine with rectangular counterweight ---
+        var h_cos    = Math.cos(hour_angle);
+        var h_sin    = Math.sin(hour_angle);
+        var h_perp_x = -h_sin;
+        var h_perp_y = h_cos;
+        var h_pivot  = hour_length * 0.40;
+        var h_hw     = HAND_PEN_WIDTH / 2.0;  // body half-width
+        var h_tw     = 1.8;                    // tail paddle half-width
+        var h_tip_x  = (cx + hour_length * h_cos).toNumber();
+        var h_tip_y  = (cy + hour_length * h_sin).toNumber();
+        var h_tail_x = cx - hour_tail * h_cos;
+        var h_tail_y = cy - hour_tail * h_sin;
+        var h_piv_x  = cx + h_pivot * h_cos;
+        var h_piv_y  = cy + h_pivot * h_sin;
+        // 5 points: tail-A, tail-B, pivot-B, tip, pivot-A
+        var h_pts = [
+            [(h_tail_x + h_tw * h_perp_x).toNumber(), (h_tail_y + h_tw * h_perp_y).toNumber()],
+            [(h_tail_x - h_tw * h_perp_x).toNumber(), (h_tail_y - h_tw * h_perp_y).toNumber()],
+            [(h_piv_x  - h_hw * h_perp_x).toNumber(), (h_piv_y  - h_hw * h_perp_y).toNumber()],
+            [h_tip_x,                                   h_tip_y                                ],
+            [(h_piv_x  + h_hw * h_perp_x).toNumber(), (h_piv_y  + h_hw * h_perp_y).toNumber()]
+        ];
         if (isAwake) {
+            dc.setColor(0x111111, Gfx.COLOR_TRANSPARENT);
+            dc.fillPolygon([
+                [h_pts[0][0]+1, h_pts[0][1]+1], [h_pts[1][0]+1, h_pts[1][1]+1],
+                [h_pts[2][0]+1, h_pts[2][1]+1], [h_pts[3][0]+1, h_pts[3][1]+1],
+                [h_pts[4][0]+1, h_pts[4][1]+1]
+            ]);
+            dc.fillCircle(h_tip_x + 1, h_tip_y + 1, radius * HAND_TIP_RATIO + 1);
+        }
+        dc.setColor(color_hand_in, Gfx.COLOR_TRANSPARENT);
+        dc.fillPolygon(h_pts);
+        dc.fillCircle(h_tip_x, h_tip_y, radius * HAND_TIP_RATIO);
+        if (isAwake) {
+            dc.setColor(lightenColor(color_hand_in), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawLine(h_pts[0][0], h_pts[0][1], h_pts[4][0], h_pts[4][1]);
+            dc.drawLine(h_pts[4][0], h_pts[4][1], h_tip_x, h_tip_y);
+            // Colored center channel
+            dc.setColor(color_arc_in, Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawLine(h_tail_x.toNumber(), h_tail_y.toNumber(), h_tip_x, h_tip_y);
+        }
+
+        // --- Minute hand: 5-point Dauphine with rectangular counterweight ---
+        var m_cos    = Math.cos(minute_angle);
+        var m_sin    = Math.sin(minute_angle);
+        var m_perp_x = -m_sin;
+        var m_perp_y = m_cos;
+        var m_pivot  = hand_length * 0.40;
+        var m_hw     = HAND_PEN_WIDTH / 2.0;
+        var m_tw     = 1.8;
+        var m_tip_x  = (cx + hand_length * m_cos).toNumber();
+        var m_tip_y  = (cy + hand_length * m_sin).toNumber();
+        var m_tail_x = cx - minute_tail * m_cos;
+        var m_tail_y = cy - minute_tail * m_sin;
+        var m_piv_x  = cx + m_pivot * m_cos;
+        var m_piv_y  = cy + m_pivot * m_sin;
+        var m_pts = [
+            [(m_tail_x + m_tw * m_perp_x).toNumber(), (m_tail_y + m_tw * m_perp_y).toNumber()],
+            [(m_tail_x - m_tw * m_perp_x).toNumber(), (m_tail_y - m_tw * m_perp_y).toNumber()],
+            [(m_piv_x  - m_hw * m_perp_x).toNumber(), (m_piv_y  - m_hw * m_perp_y).toNumber()],
+            [m_tip_x,                                   m_tip_y                                ],
+            [(m_piv_x  + m_hw * m_perp_x).toNumber(), (m_piv_y  + m_hw * m_perp_y).toNumber()]
+        ];
+        if (isAwake) {
+            dc.setColor(0x111111, Gfx.COLOR_TRANSPARENT);
+            dc.fillPolygon([
+                [m_pts[0][0]+1, m_pts[0][1]+1], [m_pts[1][0]+1, m_pts[1][1]+1],
+                [m_pts[2][0]+1, m_pts[2][1]+1], [m_pts[3][0]+1, m_pts[3][1]+1],
+                [m_pts[4][0]+1, m_pts[4][1]+1]
+            ]);
+            dc.fillCircle(m_tip_x + 1, m_tip_y + 1, radius * HAND_TIP_RATIO + 1);
+        }
+        dc.setColor(color_hand_out, Gfx.COLOR_TRANSPARENT);
+        dc.fillPolygon(m_pts);
+        dc.fillCircle(m_tip_x, m_tip_y, radius * HAND_TIP_RATIO);
+        if (isAwake) {
+            dc.setColor(lightenColor(color_hand_out), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawLine(m_pts[0][0], m_pts[0][1], m_pts[4][0], m_pts[4][1]);
+            dc.drawLine(m_pts[4][0], m_pts[4][1], m_tip_x, m_tip_y);
+            // Colored center channel
+            dc.setColor(color_arc_out, Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawLine(m_tail_x.toNumber(), m_tail_y.toNumber(), m_tip_x, m_tip_y);
+        }
+
+        // --- Center hub: 3D concentric rings ---
+        var hub_r = radius * CENTER_CIRCLE_RATIO;
+        dc.setColor(0x111111, Gfx.COLOR_TRANSPARENT);
+        dc.fillCircle(cx, cy, hub_r + 2);
+        dc.setColor(color_hand_out, Gfx.COLOR_TRANSPARENT);
+        dc.fillCircle(cx, cy, hub_r);
+        if (isAwake) {
+            dc.setColor(lightenColor(color_hand_out), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawArc(cx, cy, hub_r - 1, Gfx.ARC_CLOCKWISE, 135, 45);
+        }
+        dc.setColor(color_background, Gfx.COLOR_TRANSPARENT);
+        dc.fillCircle(cx, cy, hub_r * 0.65);
+        dc.setColor(0x111111, Gfx.COLOR_TRANSPARENT);
+        dc.setPenWidth(1);
+        dc.drawCircle(cx, cy, hub_r * 0.65);
+        dc.setColor(color_hand_in, Gfx.COLOR_TRANSPARENT);
+        dc.fillCircle(cx, cy, hub_r * 0.25);
+        if (isAwake) {
+            dc.setColor(lightenColor(color_hand_in), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawArc(cx, cy, hub_r * 0.25 - 1, Gfx.ARC_CLOCKWISE, 135, 45);
+        }
+
+        // --- Second hand: lollipop style (awake only) ---
+        if (isAwake) {
+            var second_tail = hand_length * 0.20;
+            var s_cos = Math.cos(seconde_angle);
+            var s_sin = Math.sin(seconde_angle);
+            var s_tail_x = (cx - second_tail * s_cos).toNumber();
+            var s_tail_y = (cy - second_tail * s_sin).toNumber();
+            var s_tip_x  = (cx + hand_length * s_cos).toNumber();
+            var s_tip_y  = (cy + hand_length * s_sin).toNumber();
+            // Shadow
+            dc.setColor(darkenColor(color_sec), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(SECOND_PEN_WIDTH + 1);
+            dc.drawLine(s_tail_x, s_tail_y, s_tip_x, s_tip_y);
+            // Main needle
             dc.setColor(color_sec, Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(SECOND_PEN_WIDTH);
-            dc.drawLine(cx, cy,
-                cx + hand_length * Math.cos(seconde_angle),
-                cy + hand_length * Math.sin(seconde_angle));
+            dc.drawLine(s_tail_x, s_tail_y, s_tip_x, s_tip_y);
+            // Highlight
+            dc.setColor(lightenColor(color_sec), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawLine(s_tail_x, s_tail_y, s_tip_x, s_tip_y);
+            // Lollipop counterweight ball
+            dc.setColor(0x111111, Gfx.COLOR_TRANSPARENT);
+            dc.fillCircle(s_tail_x + 1, s_tail_y + 1, 5);
+            dc.setColor(color_sec, Gfx.COLOR_TRANSPARENT);
+            dc.fillCircle(s_tail_x, s_tail_y, 5);
+            dc.setColor(lightenColor(color_sec), Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(1);
+            dc.drawArc(s_tail_x, s_tail_y, 4, Gfx.ARC_CLOCKWISE, 135, 45);
+            // Center pip
+            dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_TRANSPARENT);
+            dc.fillCircle(cx, cy, radius * HAND_TIP_INNER_RATIO);
         }
     }
 
@@ -451,22 +831,36 @@ class SimpleWatchView extends Ui.WatchFace {
         Ui.requestUpdate();
     }
 
-    // Maps a setting index (0-12) to a Garmin color constant
+    // Returns a darker version of a color (40% brightness)
+    function darkenColor(color) {
+        var r = ((color >> 16) & 0xFF) * 2 / 5;
+        var g = ((color >> 8)  & 0xFF) * 2 / 5;
+        var b = ( color        & 0xFF) * 2 / 5;
+        return (r << 16) | (g << 8) | b;
+    }
+
+    // Returns a lighter version of a color (blended 60% toward white)
+    function lightenColor(color) {
+        var r = ((color >> 16) & 0xFF);
+        var g = ((color >> 8)  & 0xFF);
+        var b = ( color        & 0xFF);
+        r = r + (255 - r) * 2 / 3;
+        g = g + (255 - g) * 2 / 3;
+        b = b + (255 - b) * 2 / 3;
+        return (r << 16) | (g << 8) | b;
+    }
+
+    // Maps a setting index to a curated 8-color palette (optimised for dark backgrounds)
     function returnColor(colorNum) {
         switch(colorNum) {
             case 0:  return Gfx.COLOR_WHITE;
-            case 1:  return Gfx.COLOR_LT_GRAY;
-            case 2:  return Gfx.COLOR_RED;
-            case 3:  return Gfx.COLOR_DK_RED;
-            case 4:  return Gfx.COLOR_ORANGE;
-            case 5:  return Gfx.COLOR_YELLOW;
+            case 1:  return 0x00FFFF; // Cyan
+            case 2:  return Gfx.COLOR_BLUE;
+            case 3:  return Gfx.COLOR_PURPLE;
+            case 4:  return Gfx.COLOR_RED;
+            case 5:  return Gfx.COLOR_ORANGE;
             case 6:  return Gfx.COLOR_GREEN;
-            case 7:  return Gfx.COLOR_DK_GREEN;
-            case 8:  return Gfx.COLOR_BLUE;
-            case 9:  return Gfx.COLOR_DK_BLUE;
-            case 10: return Gfx.COLOR_PURPLE;
-            case 11: return Gfx.COLOR_PINK;
-            case 12: return Gfx.COLOR_BLACK;
+            case 7:  return Gfx.COLOR_PINK;
             default: return Gfx.COLOR_WHITE;
         }
     }
