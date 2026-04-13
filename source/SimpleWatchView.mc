@@ -237,7 +237,10 @@ class SimpleWatchView extends Ui.WatchFace {
 
         dc.clear();
 
-        dc.setColor(colors[:color_background], Gfx.COLOR_TRANSPARENT);
+        // Background: always black in sleep — InversColor (white bg) would
+        // immediately exceed the AMOLED 10 % luminance limit in ambient mode
+        var bg = isAwake ? colors[:color_background] : Gfx.COLOR_BLACK;
+        dc.setColor(bg, Gfx.COLOR_TRANSPARENT);
         dc.fillCircle(cx, cy, radius * 2);
 
         if (isAwake) {
@@ -245,14 +248,15 @@ class SimpleWatchView extends Ui.WatchFace {
             drawStarField(dc, cx, cy, radius);
         }
 
-        var inner_r = arc_radius * layout[:percent_lit_circ];
-        // Dark guide circles — very dim in sleep to reduce AMOLED luminance
-        dc.setPenWidth(l_circ_back);
-        dc.setColor(isAwake ? Gfx.COLOR_DK_GRAY : 0x1a1a1a, Gfx.COLOR_TRANSPARENT);
-        dc.drawCircle(cx, cy, arc_radius);
-        dc.drawCircle(cx, cy, inner_r);
-        // 3D rims: bright inner edge + dim outer shadow (awake only)
+        // Guide circles: awake only — two full-circumference strokes at
+        // l_circ_back width would consume too much of the luminance budget in sleep
         if (isAwake) {
+            var inner_r = arc_radius * layout[:percent_lit_circ];
+            dc.setPenWidth(l_circ_back);
+            dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_TRANSPARENT);
+            dc.drawCircle(cx, cy, arc_radius);
+            dc.drawCircle(cx, cy, inner_r);
+            // 3D rims: bright inner edge + dim outer shadow
             dc.setPenWidth(1);
             dc.setColor(0x505050, Gfx.COLOR_TRANSPARENT);
             dc.drawCircle(cx, cy, arc_radius - l_circ_back / 2 + 1);
@@ -423,15 +427,16 @@ class SimpleWatchView extends Ui.WatchFace {
 
         var cap_r = l_circ * ARC_CAP_RATIO;
 
-        // "Remaining" dim track — draws only the unelapsed portion of each arc
-        // Uses ARC_COUNTER_CLOCKWISE from 12h to arc-tip = the opposite angular sweep
-        // This is angularly distinct from the elapsed arcs and cannot overlap with
-        // effective_radius (the progress arcs live at a different radius entirely)
-        dc.setPenWidth(l_circ_back);
-        dc.setColor(darkenColor(darkenColor(color_arc_in)), Gfx.COLOR_TRANSPARENT);
-        dc.drawArc(cx, cy, inner_r, Gfx.ARC_COUNTER_CLOCKWISE, 90, hour_end_deg);
-        dc.setColor(darkenColor(darkenColor(color_arc_out)), Gfx.COLOR_TRANSPARENT);
-        dc.drawArc(cx, cy, arc_radius, Gfx.ARC_COUNTER_CLOCKWISE, 90, min_end_deg);
+        // Remaining dim track (unelapsed portion) — awake only.
+        // In sleep mode these l_circ_back-wide arcs cover most of the circle and
+        // would push total luminance over the AMOLED 10 % budget.
+        if (isAwake) {
+            dc.setPenWidth(l_circ_back);
+            dc.setColor(darkenColor(darkenColor(color_arc_in)), Gfx.COLOR_TRANSPARENT);
+            dc.drawArc(cx, cy, inner_r, Gfx.ARC_COUNTER_CLOCKWISE, 90, hour_end_deg);
+            dc.setColor(darkenColor(darkenColor(color_arc_out)), Gfx.COLOR_TRANSPARENT);
+            dc.drawArc(cx, cy, arc_radius, Gfx.ARC_COUNTER_CLOCKWISE, 90, min_end_deg);
+        }
 
         // Inner arc: hour progress
         if (isAwake) {
