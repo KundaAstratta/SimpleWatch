@@ -352,8 +352,8 @@ class SimpleWatchView extends Ui.WatchFace {
                                 [p3[0]+1, p3[1]+1], [p4[0]+1, p4[1]+1]]);
             }
 
-            // Main rectangle — dim in sleep
-            dc.setColor(isAwake ? fg : 0x282828, Gfx.COLOR_TRANSPARENT);
+            // Main rectangle — brighter in sleep for readability
+            dc.setColor(isAwake ? fg : 0x555555, Gfx.COLOR_TRANSPARENT);
             dc.fillPolygon([p1, p2, p3, p4]);
 
             // Rounded end caps (awake only)
@@ -365,6 +365,12 @@ class SimpleWatchView extends Ui.WatchFace {
                 dc.setPenWidth(1);
                 dc.drawLine(p1[0], p1[1], p4[0], p4[1]);
             }
+        }
+
+        // Sleep mode: small 12h reference dot so the top of the dial is always clear
+        if (!isAwake) {
+            dc.setColor(0x888888, Gfx.COLOR_TRANSPARENT);
+            dc.fillCircle(cx, (cy - arc_radius + major_len / 2).toNumber(), 2);
         }
 
         // 60 minute graduation dots between main ticks (awake only)
@@ -644,27 +650,32 @@ class SimpleWatchView extends Ui.WatchFace {
         var hand_length = percent_big_circ * radius;
         var hour_length = percent_lit_circ * hand_length;
 
-        // Sleep mode: thin dim lines only — minimal luminance
+        // Sleep mode: differentiated slim hands — hour wider/brighter than minute
         if (!isAwake) {
             var h_cos_s = Math.cos(hour_angle);
             var h_sin_s = Math.sin(hour_angle);
             var m_cos_s = Math.cos(minute_angle);
             var m_sin_s = Math.sin(minute_angle);
+            // Minute hand: 2px, lighter gray — drawn first so hour overlaps at center
             dc.setPenWidth(2);
-            dc.setColor(0x555555, Gfx.COLOR_TRANSPARENT);
-            dc.drawLine(
-                (cx - hour_length * 0.15 * h_cos_s).toNumber(),
-                (cy - hour_length * 0.15 * h_sin_s).toNumber(),
-                (cx + hour_length * h_cos_s).toNumber(),
-                (cy + hour_length * h_sin_s).toNumber()
-            );
+            dc.setColor(0x777777, Gfx.COLOR_TRANSPARENT);
             dc.drawLine(
                 (cx - hand_length * 0.15 * m_cos_s).toNumber(),
                 (cy - hand_length * 0.15 * m_sin_s).toNumber(),
                 (cx + hand_length * m_cos_s).toNumber(),
                 (cy + hand_length * m_sin_s).toNumber()
             );
-            dc.setColor(0x282828, Gfx.COLOR_TRANSPARENT);
+            // Hour hand: 3px, lighter gray — visually heavier and brighter
+            dc.setPenWidth(3);
+            dc.setColor(0x888888, Gfx.COLOR_TRANSPARENT);
+            dc.drawLine(
+                (cx - hour_length * 0.15 * h_cos_s).toNumber(),
+                (cy - hour_length * 0.15 * h_sin_s).toNumber(),
+                (cx + hour_length * h_cos_s).toNumber(),
+                (cy + hour_length * h_sin_s).toNumber()
+            );
+            // Center hub: same tone as minute hand
+            dc.setColor(0x555555, Gfx.COLOR_TRANSPARENT);
             dc.fillCircle(cx, cy, 3);
             return;
         }
