@@ -277,10 +277,10 @@ class SimpleWatchView extends Ui.WatchFace {
 
         for (var i = numRings - 1; i >= 0; i--) {
             var ratio = i.toFloat() / (numRings - 1);
-            var r = (startR + (endR - startR) * ratio).toLong();
-            var g = (startG + (endG - startG) * ratio).toLong();
-            var b = (startB + (endB - startB) * ratio).toLong();
-            var color = ((r << 16) | (g << 8) | b).toNumber();
+            var r = (startR + (endR - startR) * ratio).toNumber();
+            var g = (startG + (endG - startG) * ratio).toNumber();
+            var b = (startB + (endB - startB) * ratio).toNumber();
+            var color = (r << 16) | (g << 8) | b;
             var ringRadius = maxRadius * (i + 1) / numRings;
             dc.setColor(color, Gfx.COLOR_TRANSPARENT);
             dc.fillCircle(cx, cy, ringRadius);
@@ -295,11 +295,11 @@ class SimpleWatchView extends Ui.WatchFace {
         var seed = 1;
 
         for (var i = 0; i < numStars; i++) {
-            seed = (seed * 1664525 + 1013904223) & 0x7FFFFFFF;
+            seed = (seed * 32749 + 12345) & 0xFFFF;
             var x = seed % diameter;
-            seed = (seed * 1664525 + 1013904223) & 0x7FFFFFFF;
+            seed = (seed * 32749 + 12345) & 0xFFFF;
             var y = seed % diameter;
-            seed = (seed * 1664525 + 1013904223) & 0x7FFFFFFF;
+            seed = (seed * 32749 + 12345) & 0xFFFF;
             var size = (seed % 10 > 7) ? 2 : 1;
 
             var dx = x - radius;
