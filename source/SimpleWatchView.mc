@@ -197,9 +197,12 @@ class SimpleWatchView extends Ui.WatchFace {
         var sec  = now.sec;
 
         var hour_fraction  = min / 60.0;
-        var minute_angle   = hour_fraction * TWO_PI - ANGLE_ADJUST;
-        var hour_angle     = ((hour % 12 + hour_fraction) / 12.0) * TWO_PI - ANGLE_ADJUST;
-        var seconde_angle  = sec / 60.0 * TWO_PI - ANGLE_ADJUST;
+        // Pure math delegated to SimpleWatchGeometry — unit-tested independently
+        // without a Dc or a View instance. Numerically identical to the former
+        // inlined formulas (fraction * 2π − π/2).
+        var minute_angle   = SimpleWatchGeometry.handAngle(hour_fraction);
+        var hour_angle     = SimpleWatchGeometry.handAngle(SimpleWatchGeometry.dialFraction(hour, hour_fraction));
+        var seconde_angle  = SimpleWatchGeometry.handAngle(sec / 60.0);
 
         // Activity data
         var actInfo  = Act.getInfo();
@@ -212,14 +215,16 @@ class SimpleWatchView extends Ui.WatchFace {
         var color_sec = (stepsPercent >= 1.0) ? Gfx.COLOR_GREEN : Gfx.COLOR_BLUE;
 
         var battery = Sys.getSystemStats().battery / 100.0;
-        var dayDate = Calendar.info(Time.now(), Time.FORMAT_LONG).day;
+        // FORMAT_SHORT: only the numeric day is needed; FORMAT_LONG allocated
+        // a localized dictionary + strings every frame at 1 Hz (audit C9)
+        var dayDate = Calendar.info(Time.now(), Time.FORMAT_SHORT).day;
 
         return {
             :hour_angle    => hour_angle,
             :minute_angle  => minute_angle,
             :seconde_angle => seconde_angle,
             :xyz_min       => min,
-            :xyz_hour      => (hour % 12 + hour_fraction) / 12.0,
+            :xyz_hour      => SimpleWatchGeometry.dialFraction(hour, hour_fraction),
             :stepsPercent  => stepsPercent,
             :color_sec     => color_sec,
             :battery       => battery,
@@ -235,13 +240,14 @@ class SimpleWatchView extends Ui.WatchFace {
         var arc_radius  = layout[:arc_radius];
         var l_circ_back = layout[:l_circ_back];
 
-        dc.clear();
-
-        // Background: always black in sleep — InversColor (white bg) would
+        // One full-screen paint: both color slots set so dc.clear() is
+        // unambiguous, replacing the former clear() + fillCircle(radius*2)
+        // double pass (audit C9)
+        // Background always black in sleep — InversColor (white bg) would
         // immediately exceed the AMOLED 10 % luminance limit in ambient mode
         var bg = isAwake ? colors[:color_background] : Gfx.COLOR_BLACK;
-        dc.setColor(bg, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(cx, cy, radius * 2);
+        dc.setColor(bg, bg);
+        dc.clear();
 
         if (isAwake) {
             drawConcentricBackground(dc, cx, cy, radius);
@@ -267,45 +273,60 @@ class SimpleWatchView extends Ui.WatchFace {
         }
     }
 
-    // Draws a dark navy radial gradient from center (very dark) to edge (dark teal)
+    // Draws a dark navy radial gradient from center (very dark) to edge (dark teal).
+    // Each gradient step is a single wide-pen drawCircle ring instead of a
+    // stacked full-screen fillCircle: overdraw drops from ~11.5x the
+    // framebuffer to ~1.0x — this runs at 1 Hz while awake (audit C2).
     function drawConcentricBackground(dc, cx, cy, radius) {
         var numRings = 30;
         var maxRadius = radius + 10;
+        // Integer division is fine: the +2 pen overlap hides banding steps
+        var band = maxRadius / numRings;
 
-        var startR = 0;   var startG = 0x05; var startB = 0x10;
-        var endR   = 0;   var endG   = 0x30; var endB   = 0x50;
+        var startG = 0x05; var startB = 0x10;
+        var endG   = 0x30; var endB   = 0x50;
 
-        for (var i = numRings - 1; i >= 0; i--) {
-            var ratio = i.toFloat() / (numRings - 1);
-            var r = (startR + (endR - startR) * ratio).toNumber();
+        // Largest ring first (edge color) down to innermost (start color)
+        for (var i = numRings; i >= 1; i--) {
+            var ratio = (i - 1).toFloat() / (numRings - 1);
             var g = (startG + (endG - startG) * ratio).toNumber();
             var b = (startB + (endB - startB) * ratio).toNumber();
-            var color = (r << 16) | (g << 8) | b;
-            var ringRadius = maxRadius * (i + 1) / numRings;
-            dc.setColor(color, Gfx.COLOR_TRANSPARENT);
-            dc.fillCircle(cx, cy, ringRadius);
+            dc.setColor((g << 8) | b, Gfx.COLOR_TRANSPARENT);
+            dc.setPenWidth(band + 2);
+            dc.drawCircle(cx, cy, maxRadius * i / numRings);
         }
+
+        // Wide-pen rings leave the central disk uncovered — fill it with the
+        // darkest gradient step (same color the innermost ring carries)
+        dc.setColor((startG << 8) | startB, Gfx.COLOR_TRANSPARENT);
+        dc.fillCircle(cx, cy, band);
     }
 
-    // Draws ~150 stars using a deterministic PRNG, clipped to the circular screen
+    // Draws ~60 stars using a deterministic PRNG, clipped to the circular screen.
+    // 60 instead of the original 150: only ≈π/4 of candidates fall inside the
+    // circle anyway, so visible density drops just ~15 % while fillCircle calls
+    // shrink 2.5x at 1 Hz (audit C2).
     function drawStarField(dc, cx, cy, radius) {
         dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
-        var numStars = 150;
+        var numStars = 60;
         var diameter = radius * 2;
+        // Explicit frame origin — stays correct even if width != height (audit C6)
+        var origin_x = cx - radius;
+        var origin_y = cy - radius;
         var seed = 1;
 
         for (var i = 0; i < numStars; i++) {
-            seed = (seed * 32749 + 12345) & 0xFFFF;
+            seed = SimpleWatchGeometry.lcg16(seed);
             var x = seed % diameter;
-            seed = (seed * 32749 + 12345) & 0xFFFF;
+            seed = SimpleWatchGeometry.lcg16(seed);
             var y = seed % diameter;
-            seed = (seed * 32749 + 12345) & 0xFFFF;
+            seed = SimpleWatchGeometry.lcg16(seed);
             var size = (seed % 10 > 7) ? 2 : 1;
 
             var dx = x - radius;
             var dy = y - radius;
             if (dx * dx + dy * dy <= radius * radius) {
-                dc.fillCircle(cx - radius + x, cy - radius + y, size);
+                dc.fillCircle(origin_x + x, origin_y + y, size);
             }
         }
     }
@@ -427,11 +448,15 @@ class SimpleWatchView extends Ui.WatchFace {
         var xyz_hour      = timeData[:xyz_hour];
         var xyz_min       = timeData[:xyz_min];
 
-        var inner_r      = arc_radius * percent_lit_circ;
-        var hour_end_deg = 90 - 360 * xyz_hour;
-        var min_end_deg  = 90 - 360 * xyz_min / 60;
+        var inner_r = (arc_radius * percent_lit_circ).toNumber();
+        // Garmin drawArc degrees: 90 = 12 o'clock; clockwise sweep = 90° minus
+        // the elapsed dial fraction. Pure formulas live in SimpleWatchGeometry.
+        // safeArc() also skips the degenerate start == end case (HH:00:00 —
+        // behaviour undefined across devices, audit C5)
+        var hour_end_deg = SimpleWatchGeometry.progressEndDeg(xyz_hour);
+        var min_end_deg  = SimpleWatchGeometry.progressEndDeg(xyz_min / 60.0);
 
-        var cap_r = l_circ * ARC_CAP_RATIO;
+        var cap_r = (l_circ * ARC_CAP_RATIO).toNumber();
 
         // Remaining dim track (unelapsed portion) — awake only.
         // In sleep mode these l_circ_back-wide arcs cover most of the circle and
@@ -439,59 +464,61 @@ class SimpleWatchView extends Ui.WatchFace {
         if (isAwake) {
             dc.setPenWidth(l_circ_back);
             dc.setColor(darkenColor(darkenColor(color_arc_in)), Gfx.COLOR_TRANSPARENT);
-            dc.drawArc(cx, cy, inner_r, Gfx.ARC_COUNTER_CLOCKWISE, 90, hour_end_deg);
+            safeArc(dc, cx, cy, inner_r, Gfx.ARC_COUNTER_CLOCKWISE, 90, hour_end_deg);
             dc.setColor(darkenColor(darkenColor(color_arc_out)), Gfx.COLOR_TRANSPARENT);
-            dc.drawArc(cx, cy, arc_radius, Gfx.ARC_COUNTER_CLOCKWISE, 90, min_end_deg);
+            safeArc(dc, cx, cy, arc_radius.toNumber(), Gfx.ARC_COUNTER_CLOCKWISE, 90, min_end_deg);
         }
 
         // Inner arc: hour progress
         if (isAwake) {
             dc.setColor(darkenColor(darkenColor(color_arc_in)), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(l_circ + 6);
-            dc.drawArc(cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
+            safeArc(dc, cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
             dc.setColor(darkenColor(color_arc_in), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(l_circ + 2);
-            dc.drawArc(cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
+            safeArc(dc, cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
             dc.setColor(color_arc_in, Gfx.COLOR_TRANSPARENT);
-            dc.fillCircle(cx, (cy - inner_r).toNumber(), cap_r);
+            dc.fillCircle(cx, cy - inner_r, cap_r);
             dc.setPenWidth(l_circ);
-            dc.drawArc(cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
-            var h_end_rad = hour_end_deg * Math.PI / 180.0;
-            dc.fillCircle((cx + inner_r * Math.cos(h_end_rad)).toNumber(),
-                          (cy - inner_r * Math.sin(h_end_rad)).toNumber(), cap_r);
+            safeArc(dc, cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
+            // End cap at the Garmin-degrees endpoint (audit C4 of the maths:
+            // the sine sign flip lives in SimpleWatchGeometry.arcPoint)
+            var h_end = SimpleWatchGeometry.arcPoint(cx, cy, inner_r, hour_end_deg);
+            dc.fillCircle(h_end[0], h_end[1], cap_r);
             dc.setColor(lightenColor(color_arc_in), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(1);
-            dc.drawArc(cx, cy, inner_r - l_circ / 2 + 1, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
+            safeArc(dc, cx, cy, (inner_r - l_circ / 2 + 1).toNumber(), Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
         } else {
             // Sleep: single 1px dim arc, no caps
             dc.setColor(0x1a1a1a, Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(1);
-            dc.drawArc(cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
+            safeArc(dc, cx, cy, inner_r, Gfx.ARC_CLOCKWISE, 90, hour_end_deg);
         }
 
         // Outer arc: minute progress
         if (isAwake) {
             dc.setColor(darkenColor(darkenColor(color_arc_out)), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(l_circ + 6);
-            dc.drawArc(cx, cy, arc_radius, Gfx.ARC_CLOCKWISE, 90, min_end_deg);
+            safeArc(dc, cx, cy, arc_radius.toNumber(), Gfx.ARC_CLOCKWISE, 90, min_end_deg);
             dc.setColor(darkenColor(color_arc_out), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(l_circ + 2);
-            dc.drawArc(cx, cy, arc_radius, Gfx.ARC_CLOCKWISE, 90, min_end_deg);
+            safeArc(dc, cx, cy, arc_radius.toNumber(), Gfx.ARC_CLOCKWISE, 90, min_end_deg);
             dc.setColor(color_arc_out, Gfx.COLOR_TRANSPARENT);
-            dc.fillCircle(cx, (cy - arc_radius).toNumber(), cap_r);
+            dc.fillCircle(cx, cy - arc_radius.toNumber(), cap_r);
             dc.setPenWidth(l_circ);
-            dc.drawArc(cx, cy, arc_radius, Gfx.ARC_CLOCKWISE, 90, min_end_deg);
-            var m_end_rad = min_end_deg * Math.PI / 180.0;
-            dc.fillCircle((cx + arc_radius * Math.cos(m_end_rad)).toNumber(),
-                          (cy - arc_radius * Math.sin(m_end_rad)).toNumber(), cap_r);
+            safeArc(dc, cx, cy, arc_radius.toNumber(), Gfx.ARC_CLOCKWISE, 90, min_end_deg);
+            // End cap at the Garmin-degrees endpoint (audit C4 of the maths:
+            // the sine sign flip lives in SimpleWatchGeometry.arcPoint)
+            var m_end = SimpleWatchGeometry.arcPoint(cx, cy, arc_radius.toNumber(), min_end_deg);
+            dc.fillCircle(m_end[0], m_end[1], cap_r);
             dc.setColor(lightenColor(color_arc_out), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(1);
-            dc.drawArc(cx, cy, arc_radius - l_circ / 2 + 1, Gfx.ARC_CLOCKWISE, 90, min_end_deg);
+            safeArc(dc, cx, cy, (arc_radius - l_circ / 2 + 1).toNumber(), Gfx.ARC_CLOCKWISE, 90, min_end_deg);
         } else {
             // Sleep: single 1px dim arc, no caps
             dc.setColor(0x1a1a1a, Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(1);
-            dc.drawArc(cx, cy, arc_radius, Gfx.ARC_CLOCKWISE, 90, min_end_deg);
+            safeArc(dc, cx, cy, arc_radius.toNumber(), Gfx.ARC_CLOCKWISE, 90, min_end_deg);
         }
     }
 
@@ -516,7 +543,10 @@ class SimpleWatchView extends Ui.WatchFace {
                 if (invers_color == 1) {
                     icon = Ui.loadResource(Rez.Drawables.NotificationBlack);
                 }
-                dc.drawBitmap(cx + radius * percent_pos_oth, cy, icon);
+                // drawBitmap anchors top-left: shift up half the icon height
+                // to center it on the horizontal axis (audit C4)
+                dc.drawBitmap((cx + radius * percent_pos_oth).toNumber(),
+                              cy - iconHalfHeight(icon), icon);
             } else {
                 // Date window: beveled box with date text
                 var date_cx = (cx + radius * percent_pos_dat).toNumber();
@@ -549,7 +579,10 @@ class SimpleWatchView extends Ui.WatchFace {
             if (invers_color == 1) {
                 icon = Ui.loadResource(Rez.Drawables.NotconnectedBlack);
             }
-            dc.drawBitmap(cx + radius * percent_pos_oth, cy, icon);
+            // drawBitmap anchors top-left: shift up half the icon height
+            // to center it on the horizontal axis (audit C4)
+            dc.drawBitmap((cx + radius * percent_pos_oth).toNumber(),
+                          cy - iconHalfHeight(icon), icon);
         }
     }
 
@@ -570,7 +603,7 @@ class SimpleWatchView extends Ui.WatchFace {
         var battery          = timeData[:battery];
         var battery_color    = (battery < BATTERY_CRITICAL_THRESHOLD) ? Gfx.COLOR_RED : color_foreground;
 
-        var effective_radius = arc_radius - pos_dec - pos_large;
+        var effective_radius = (arc_radius - pos_dec - pos_large).toNumber();
 
         var arc_pen = (large_arc == 0) ? 3 : l_circ;
 
@@ -581,26 +614,27 @@ class SimpleWatchView extends Ui.WatchFace {
                 var steps_end = (stepsPercent >= 1.0) ? 180 : stepsPercent * 180;
                 dc.setColor(darkenColor(darkenColor(color_sec)), Gfx.COLOR_TRANSPARENT);
                 dc.setPenWidth(arc_pen + 4);
-                dc.drawArc(cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
+                safeArc(dc, cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
                 dc.setColor(darkenColor(color_sec), Gfx.COLOR_TRANSPARENT);
                 dc.setPenWidth(arc_pen + 1);
-                dc.drawArc(cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
+                safeArc(dc, cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
                 dc.setColor(color_sec, Gfx.COLOR_TRANSPARENT);
                 dc.setPenWidth(arc_pen);
-                dc.drawArc(cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
+                safeArc(dc, cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
                 if ((large_arc == 1) or (large_arc == 2)) {
-                    dc.fillCircle(
-                        cx + effective_radius * Math.cos(-Math.PI * stepsPercent),
-                        cy + effective_radius * Math.sin(-Math.PI * stepsPercent),
-                        l_circ * ARC_CAP_RATIO);
+                    // Cap rides on the drawn arc end — steps_end is already
+                    // clamped to 180 for stepsPercent > 1.0, so the cap can
+                    // never detach from the arc (audit C3)
+                    var s_cap = SimpleWatchGeometry.arcPoint(cx, cy, effective_radius, steps_end);
+                    dc.fillCircle(s_cap[0], s_cap[1], (l_circ * ARC_CAP_RATIO).toNumber());
                 }
                 dc.setColor(lightenColor(color_sec), Gfx.COLOR_TRANSPARENT);
                 dc.setPenWidth(1);
-                dc.drawArc(cx, cy, effective_radius - arc_pen / 2 + 1, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
+                safeArc(dc, cx, cy, effective_radius - arc_pen / 2 + 1, Gfx.ARC_COUNTER_CLOCKWISE, 0, steps_end);
             } else {
                 dc.setColor(color_sec, Gfx.COLOR_TRANSPARENT);
                 dc.setPenWidth(arc_pen);
-                dc.drawArc(cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, 1);
+                safeArc(dc, cx, cy, effective_radius, Gfx.ARC_COUNTER_CLOCKWISE, 0, 1);
             }
         }
 
@@ -609,22 +643,21 @@ class SimpleWatchView extends Ui.WatchFace {
         if (showBattery == 0) {
             dc.setColor(darkenColor(darkenColor(battery_color)), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(arc_pen + 4);
-            dc.drawArc(cx, cy, effective_radius, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
+            safeArc(dc, cx, cy, effective_radius, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
             dc.setColor(darkenColor(battery_color), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(arc_pen + 1);
-            dc.drawArc(cx, cy, effective_radius, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
+            safeArc(dc, cx, cy, effective_radius, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
             dc.setColor(battery_color, Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(arc_pen);
-            dc.drawArc(cx, cy, effective_radius, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
+            safeArc(dc, cx, cy, effective_radius, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
             if ((large_arc == 1) or (large_arc == 2)) {
-                dc.fillCircle(
-                    cx + effective_radius * Math.cos(Math.PI * battery),
-                    cy + effective_radius * Math.sin(Math.PI * battery),
-                    l_circ * ARC_CAP_RATIO);
+                // battery ∈ [0, 1] ⇒ end ∈ [−180, 0], cap stays on the arc
+                var b_cap = SimpleWatchGeometry.arcPoint(cx, cy, effective_radius, -180 * battery);
+                dc.fillCircle(b_cap[0], b_cap[1], (l_circ * ARC_CAP_RATIO).toNumber());
             }
             dc.setColor(lightenColor(battery_color), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(1);
-            dc.drawArc(cx, cy, effective_radius - arc_pen / 2 + 1, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
+            safeArc(dc, cx, cy, effective_radius - arc_pen / 2 + 1, Gfx.ARC_CLOCKWISE, 0, -180 * battery);
         }
     }
 
@@ -712,11 +745,11 @@ class SimpleWatchView extends Ui.WatchFace {
                 [h_pts[2][0]+1, h_pts[2][1]+1], [h_pts[3][0]+1, h_pts[3][1]+1],
                 [h_pts[4][0]+1, h_pts[4][1]+1]
             ]);
-            dc.fillCircle(h_tip_x + 1, h_tip_y + 1, radius * HAND_TIP_RATIO + 1);
+            dc.fillCircle(h_tip_x + 1, h_tip_y + 1, (radius * HAND_TIP_RATIO + 1).toNumber());
         }
         dc.setColor(color_hand_in, Gfx.COLOR_TRANSPARENT);
         dc.fillPolygon(h_pts);
-        dc.fillCircle(h_tip_x, h_tip_y, radius * HAND_TIP_RATIO);
+        dc.fillCircle(h_tip_x, h_tip_y, (radius * HAND_TIP_RATIO).toNumber());
         if (isAwake) {
             dc.setColor(lightenColor(color_hand_in), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(1);
@@ -756,11 +789,11 @@ class SimpleWatchView extends Ui.WatchFace {
                 [m_pts[2][0]+1, m_pts[2][1]+1], [m_pts[3][0]+1, m_pts[3][1]+1],
                 [m_pts[4][0]+1, m_pts[4][1]+1]
             ]);
-            dc.fillCircle(m_tip_x + 1, m_tip_y + 1, radius * HAND_TIP_RATIO + 1);
+            dc.fillCircle(m_tip_x + 1, m_tip_y + 1, (radius * HAND_TIP_RATIO + 1).toNumber());
         }
         dc.setColor(color_hand_out, Gfx.COLOR_TRANSPARENT);
         dc.fillPolygon(m_pts);
-        dc.fillCircle(m_tip_x, m_tip_y, radius * HAND_TIP_RATIO);
+        dc.fillCircle(m_tip_x, m_tip_y, (radius * HAND_TIP_RATIO).toNumber());
         if (isAwake) {
             dc.setColor(lightenColor(color_hand_out), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(1);
@@ -775,25 +808,25 @@ class SimpleWatchView extends Ui.WatchFace {
         // --- Center hub: 3D concentric rings ---
         var hub_r = radius * CENTER_CIRCLE_RATIO;
         dc.setColor(0x111111, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(cx, cy, hub_r + 2);
+        dc.fillCircle(cx, cy, (hub_r + 2).toNumber());
         dc.setColor(color_hand_out, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(cx, cy, hub_r);
+        dc.fillCircle(cx, cy, hub_r.toNumber());
         if (isAwake) {
             dc.setColor(lightenColor(color_hand_out), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(1);
-            dc.drawArc(cx, cy, hub_r - 1, Gfx.ARC_CLOCKWISE, 135, 45);
+            safeArc(dc, cx, cy, (hub_r - 1).toNumber(), Gfx.ARC_CLOCKWISE, 135, 45);
         }
         dc.setColor(color_background, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(cx, cy, hub_r * 0.65);
+        dc.fillCircle(cx, cy, (hub_r * 0.65).toNumber());
         dc.setColor(0x111111, Gfx.COLOR_TRANSPARENT);
         dc.setPenWidth(1);
-        dc.drawCircle(cx, cy, hub_r * 0.65);
+        dc.drawCircle(cx, cy, (hub_r * 0.65).toNumber());
         dc.setColor(color_hand_in, Gfx.COLOR_TRANSPARENT);
-        dc.fillCircle(cx, cy, hub_r * 0.25);
+        dc.fillCircle(cx, cy, (hub_r * 0.25).toNumber());
         if (isAwake) {
             dc.setColor(lightenColor(color_hand_in), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(1);
-            dc.drawArc(cx, cy, hub_r * 0.25 - 1, Gfx.ARC_CLOCKWISE, 135, 45);
+            safeArc(dc, cx, cy, (hub_r * 0.25 - 1).toNumber(), Gfx.ARC_CLOCKWISE, 135, 45);
         }
 
         // --- Second hand: lollipop style (awake only) ---
@@ -824,10 +857,10 @@ class SimpleWatchView extends Ui.WatchFace {
             dc.fillCircle(s_tail_x, s_tail_y, 5);
             dc.setColor(lightenColor(color_sec), Gfx.COLOR_TRANSPARENT);
             dc.setPenWidth(1);
-            dc.drawArc(s_tail_x, s_tail_y, 4, Gfx.ARC_CLOCKWISE, 135, 45);
+            safeArc(dc, s_tail_x, s_tail_y, 4, Gfx.ARC_CLOCKWISE, 135, 45);
             // Center pip
             dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_TRANSPARENT);
-            dc.fillCircle(cx, cy, radius * HAND_TIP_INNER_RATIO);
+            dc.fillCircle(cx, cy, (radius * HAND_TIP_INNER_RATIO).toNumber());
         }
     }
 
@@ -855,7 +888,8 @@ class SimpleWatchView extends Ui.WatchFace {
         return (r << 16) | (g << 8) | b;
     }
 
-    // Returns a lighter version of a color (blended 60% toward white)
+    // Returns a lighter version of a color (blended 2/3 toward white; the
+    // former comment said 60 %, the code always did 2/3 ≈ 66.7 % — audit C9)
     function lightenColor(color) {
         var r = ((color >> 16) & 0xFF);
         var g = ((color >> 8)  & 0xFF);
@@ -879,6 +913,28 @@ class SimpleWatchView extends Ui.WatchFace {
             case 7:  return Gfx.COLOR_PINK;
             default: return Gfx.COLOR_WHITE;
         }
+    }
+
+    // Draws an arc with the two guards from the audit:
+    //  1. drawArc() only exists since Connect IQ 2.3.0. minApiLevel="2.3.0"
+    //     now enforces it for store builds; this runtime guard keeps any
+    //     sideloaded build on an older firmware from crashing on a missing
+    //     symbol instead of rendering (audit C1).
+    //  2. start == end is a degenerate arc whose behaviour is undefined across
+    //     devices (full circle vs nothing): skipped explicitly (audit C5).
+    function safeArc(dc, x, y, r, clip, start, end) as Void {
+        if (!(dc has :drawArc)) { return; }
+        if (start == end) { return; }
+        dc.drawArc(x, y, r, clip, start, end);
+    }
+
+    // Vertical half-height of a loaded bitmap resource, across SDK generations:
+    // WatchUi.Bitmap resources expose getDimensions() (API 1.0+), while
+    // Graphics.BitmapReference only gained getHeight() at API 4.0 (audit C4).
+    function iconHalfHeight(icon) as Lang.Number {
+        if (icon has :getDimensions) { return icon.getDimensions()[1] / 2; }
+        if (icon has :getHeight)     { return icon.getHeight() / 2; }
+        return 0;
     }
 
 }
